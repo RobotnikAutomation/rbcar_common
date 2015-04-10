@@ -63,7 +63,7 @@
 
 	<!-- SENSORS -->    
     <xacro:sensor_hokuyo3d name="hokuyo3d" parent="base_link">
-		<origin xyz="1.0 0.0 0.1" rpy="0 0 0"/>
+		<origin xyz="0.95 0.0 0.1" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo3d>
 
 	
