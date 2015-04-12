@@ -46,20 +46,49 @@
   <xacro:property name="servo_stall_torque" value="50"/>  <!-- check -->
   <xacro:property name="servo_no_load_speed" value="25"/> <!-- check -->
 
+  <!-- Inertia of a thick-walled cylindrical tube with open ends. Height is
+       measured along the z axis, which is the tube's axis. inner_rad and
+       outer_rad are the tube's inner and outer radii, respectively. -->
+  <xacro:macro name="thick_walled_tube_inertial"
+               params="inner_rad outer_rad height mass">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia ixx="${(1 / 12) * mass * (3 * (inner_rad * inner_rad +
+                    outer_rad * outer_rad) + height * height)}"
+               ixy="0" ixz="0"
+               iyy="${(1 / 12) * mass * (3 * (inner_rad * inner_rad +
+                    outer_rad * outer_rad) + height * height)}"
+               iyz="0"
+               izz="${mass * (inner_rad * inner_rad +
+                    outer_rad * outer_rad) / 2}"/>
+    </inertial>
+  </xacro:macro>
+  
+  <!-- Null inertial element. This is needed to make the model work with
+       Gazebo. -->
+  <xacro:macro name="null_inertial">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </xacro:macro>
+  
   <!-- Shock absorber -->
   <xacro:macro name="shock"
                params="lr_prefix fr_prefix lr_reflect fr_reflect child">
+
     <joint name="${lr_prefix}_${fr_prefix}_shock" type="prismatic">
       <parent link="base_link"/>
       <child link="${child}"/>
-
+     
       <origin xyz="${fr_reflect * wheelbase / 2}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
                    ${(wheel_travel / 2) - shock_z_offset}"/>
       <axis xyz="0 0 -1"/>
       <limit lower="${-wheel_travel / 2}" upper="${wheel_travel / 2}"
              effort="${shock_eff_limit}" velocity="${shock_vel_limit}"/>
-    </joint>
+    </joint>    
+
     <transmission name="${lr_prefix}_${fr_prefix}_shock_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${lr_prefix}_${fr_prefix}_shock">
@@ -72,11 +101,25 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
+                
   </xacro:macro>
 
   <!-- The "wheel" macro defines an axle carrier, axle, and wheel. -->
   <xacro:macro name="wheel" params="lr_prefix fr_prefix lr_reflect">
+    
     <link name="${lr_prefix}_${fr_prefix}_axle_carrier">
+	  <!-- visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		  
+	  </visual>
+	  <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
       <xacro:null_inertial/>
     </link>
 
@@ -101,6 +144,11 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
+
+    <gazebo reference="${lr_prefix}_${fr_prefix}_axle_carrier">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
 
     <link name="${lr_prefix}_${fr_prefix}_wheel">
       <visual>
@@ -143,6 +191,18 @@
                  child="${lr_prefix}_steering_link"/>
 
     <link name="${lr_prefix}_steering_link">
+	  <!-- visual>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </visual>
+	  <collision>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
       <xacro:null_inertial/>
     </link>
 
@@ -166,6 +226,10 @@
       </actuator>
     </transmission>
 
+    <gazebo reference="${lr_prefix}_steering_link">
+      <material>Gazebo/Black</material>
+    </gazebo>
+
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>
   </xacro:macro>
@@ -179,5 +243,6 @@
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>
   </xacro:macro> 
+  
   
  </robot> 

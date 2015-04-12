@@ -106,7 +106,10 @@
 		<origin xyz="0.3 0.0 0.24" rpy="0 0 0"/> 
 	</xacro:sensor_fotonic>  
 -->
-  
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>  
 	
 </robot>
 
