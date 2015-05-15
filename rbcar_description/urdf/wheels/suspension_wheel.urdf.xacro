@@ -36,7 +36,8 @@
        as a function of the max gradient (15%) with overall max payload (600Kg) * wheel_radius
        (calculating this way, it should be divided by 2 if 2 motors are used)
        axle_eff_limit = 204.95 / 2 N m = ~102.5 -->
-  <xacro:property name="axle_eff_limit" value="102.5"/>
+  <!-- xacro:property name="axle_eff_limit" value="102.5"/ -->
+  <xacro:property name="axle_eff_limit" value="204.95"/>
   <!-- max_speed = 33 Km/h = 9.17 m/s
        axle_vel_limit = (2 * pi) * (max_speed / (pi * tire_dia)) =  39.02 rad/s -->
   <xacro:property name="axle_vel_limit" value="39.02"/>
