@@ -22,7 +22,7 @@
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
-	     		<mesh filename="package://rbcar_description/meshes/sensors/hokuyo3d.dae"/>
+	     		<mesh filename="package://walle_description/meshes/sensors/hokuyo3d.dae"/>
 			</geometry>
 		</visual>
 
@@ -45,17 +45,18 @@
 			<sensor type="ray" name="${name}_sensor">
 				<pose>0 0 0 0 0 0</pose>
 				<visualize>false</visualize>
-				<update_rate>20</update_rate>
+				<update_rate>5</update_rate>
 				<ray>
 					<scan>
                         <horizontal>
-                            <samples>16</samples>
+                            <!-- samples>16</samples -->
+                            <samples>144</samples>
                             <resolution>1.0</resolution>
                             <min_angle>-1.83591184</min_angle>
                             <max_angle>1.83591184</max_angle>
                         </horizontal>
                         <vertical>
-                            <samples>162</samples>
+                            <samples>74</samples>
                             <resolution>1.0</resolution>
                             <min_angle>-0.0872664626</min_angle>
                             <max_angle>0.610865238</max_angle>
