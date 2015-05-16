@@ -4,14 +4,13 @@
 
   <xacro:macro name="sensor_hokuyo3d" params="name parent *origin">
      
-    <joint name="${name}_laser_joint" type="fixed">
+    <joint name="${name}_laser_fix_joint" type="fixed">
       <insert_block name="origin" />
       <parent link="${parent}"/>
-      <child link="${name}_laser_link"/>
+      <child link="${name}_laser_fix_link"/>
 	</joint>
-
-  
-	<link name="${name}_laser_link">
+	
+	<link name="${name}_laser_fix_link">
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<geometry>
@@ -32,7 +31,15 @@
 			<inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
 		</inertial>
 	</link>
-	
+
+	<link name="${name}_laser_link">
+	</link>
+    <joint name="${name}_laser_joint" type="fixed">
+      <parent link="${name}_laser_fix_link"/>
+      <child link="${name}_laser_link"/>
+      <origin xyz="0.08 0 0.08" rpy="0 0 0"/>
+	</joint>
+
 
 	<!-- Hokuyo sensor for simulation -->		
 	<sensor_hokuyo3d_gazebo/>
@@ -58,8 +65,8 @@
                         <vertical>
                             <samples>74</samples>
                             <resolution>1.0</resolution>
-                            <min_angle>-0.0872664626</min_angle>
-                            <max_angle>0.610865238</max_angle>
+                            <min_angle>-0.610865238</min_angle>								
+                            <max_angle>0.0872664626</max_angle>
                         </vertical>
 					</scan>
 					<range>
