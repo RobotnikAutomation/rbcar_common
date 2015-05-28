@@ -15,9 +15,8 @@
 	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel.urdf.xacro" />
     
 	<!-- Import all available sensors -->
-	<xacro:include filename="$(find rbcar_description)/urdf/sensors/all_sensors.urdf.xacro" />
-  
-   
+	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
+     
 	<!-- ***************** -->
 	<!-- Global parameters -->
 	<!-- ***************** -->
