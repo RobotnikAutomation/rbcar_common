@@ -9,11 +9,60 @@
   <!-- ***************** -->
   <!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
   <!-- Import Robotnik CAR base elements -->
+  <!-- ros control plugin -->
+  <!-- No Ackermann steering plugin -->
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
   </gazebo>
   <!-- Import Robotnik CAR wheels -->
+  <!-- hub_dia and tire_dia are the diameters of the hub and tire,
+       respectively. hex_hub_depth is the distance that the hex hub is
+       inset from the outer edge of the tire. It is set so that each wheel
+       is a "zero offset" wheel. hex_hub_depth = tire_width / 2 -
+       axle_length. -->
+  <!-- or +0.072 -->
+  <!-- check -->
+  <!-- hex_hub_dist is the distance between left and right hex hubs when
+       the shock absorbers are fully extended. axle_length is the distance
+       from a U joint to the corresponding hex hub. wheel_travel is the
+       vertical wheel travel. -->
+  <!-- 1.127 0.742 check -->
+  <!-- Degree-to-radian conversions -->
+  <!-- shock_eff_limit is 2 * ((shock_stroke / 2) * shock_spring_constant) N. -->
+  <!-- axle eff limit = 2 * stall_torque 
+       as a function of the max gradient (15%) with overall max payload (600Kg) * wheel_radius
+       (calculating this way, it should be divided by 2 if 2 motors are used)
+       axle_eff_limit = 204.95 / 2 N m = ~102.5 -->
+  <!-- xacro:property name="axle_eff_limit" value="102.5"/ -->
+  <!-- max_speed = 33 Km/h = 9.17 m/s
+       axle_vel_limit = (2 * pi) * (max_speed / (pi * tire_dia)) =  39.02 rad/s -->
+  <!-- Servo_stall_torque of the direction axis in Nm. servo_no_load_speed is
+       measured in rad/s. -->
+  <!-- check -->
+  <!-- check -->
+  <!-- Inertia of a thick-walled cylindrical tube with open ends. Height is
+       measured along the z axis, which is the tube's axis. inner_rad and
+       outer_rad are the tube's inner and outer radii, respectively. -->
+  <!-- Null inertial element. This is needed to make the model work with
+       Gazebo. -->
+  <!-- Shock absorber -->
+  <!-- The "wheel" macro defines an axle carrier, axle, and wheel. -->
+  <!-- xacro:macro name="rubber_wheel" params="name parent *origin reflect hq" -->
+  <!-- Front wheel -->
+  <!-- Rear wheel -->
   <!-- Import all available sensors -->
+  <!-- This file unifies all sensors that can be used on simulation, defined as xacro:macros -->
+  <!-- Axis p5512 -->
+  <!-- Axis m5013 -->
+  <!-- Fotonic -->
+  <!-- GPS -->
+  <!-- Hokuyo urg04lx -->
+  <!-- Hokuyo utm30lx -->
+  <!-- Imu -->
+  <!-- Kinect -->
+  <!-- Asus Xtion PRO -->
+  <!-- Xacro properties -->
+  <!-- Hokuyo 3d -->
   <!-- ***************** -->
   <!-- Global parameters -->
   <!-- ***************** -->
@@ -25,8 +74,10 @@
   <!-- *************** -->
   <!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
   <!-- Summit XL base -->
+  <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="wheel_width" value="0.175"/>
+  <!-- BASE FOOTPRINT -->
   <link name="base_footprint">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -44,16 +95,15 @@
 -->
   </link>
   <joint name="base_footprint_joint" type="fixed">
-    <!-- origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" / -->
-    <!-- ${wheel_radius} property must be defined inside wheel description -->
-    <origin rpy="0 0 0" xyz="0 0 0.235"/>
-    <!-- ${wheel_radius} property must be defined inside wheel description -->
+    <origin rpy="0 0 0" xyz="0 0 0.150"/>
+    <!-- height is the clearance -->
     <parent link="base_footprint"/>
     <child link="base_link"/>
   </joint>
+  <!-- BASE_LINK -->
   <link name="base_link">
     <inertial>
-      <mass value="250.0"/>
+      <mass value="125.0"/>
       <origin xyz="0 0 0"/>
       <inertia ixx="1.391" ixy="0.004" ixz="0.0" iyy="6.853" iyz="0.0" izz="6.125"/>
     </inertial>
@@ -74,7 +124,15 @@
     </collision>
   </link>
   <!-- Gazebo ros control pluggins -->
-  <xacro:ros_control/>
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="ros_control">
+      <robotNamespace>/rbcar</robotNamespace>
+      <robotParam>robot_description</robotParam>
+      <!-- controlPeriod>0.003</controlPeriod -->
+      <controlPeriod>0.001</controlPeriod>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
   <!-- Gazebo skid steering pluggins -->
   <!-- xacro:skid_steering broadcastOdomTF="1"/ -->
   <!-- WHEELS -->
@@ -99,19 +157,22 @@
     </actuator>
   </transmission>
   <link name="left_steering_link">
-    <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </collision>
-    <xacro:null_inertial/>
+    <!-- visual>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </visual>
+	  <collision>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
   <joint name="left_steering_joint" type="revolute">
     <parent link="left_steering_link"/>
@@ -135,26 +196,31 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <link name="left_front_axle_carrier">
-    <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </collision>
-    <xacro:null_inertial/>
+    <!-- visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		  
+	  </visual>
+	  <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
+  <!-- The left and right axles have the same axis so that identical
+         rotation values cause the wheels to rotate in the same direction. -->
   <joint name="left_front_axle" type="continuous">
     <parent link="left_front_axle_carrier"/>
     <child link="left_front_wheel"/>
     <origin rpy="1.57079633 0 3.14159265"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="102.5" velocity="39.02"/>
+    <limit effort="204.95" velocity="39.02"/>
   </joint>
   <transmission name="left_front_axle_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -213,19 +279,22 @@
     </actuator>
   </transmission>
   <link name="right_steering_link">
-    <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </collision>
-    <xacro:null_inertial/>
+    <!-- visual>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </visual>
+	  <collision>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
   <joint name="right_steering_joint" type="revolute">
     <parent link="right_steering_link"/>
@@ -249,26 +318,31 @@
     <material>Gazebo/Black</material>
   </gazebo>
   <link name="right_front_axle_carrier">
-    <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </collision>
-    <xacro:null_inertial/>
+    <!-- visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		  
+	  </visual>
+	  <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
+  <!-- The left and right axles have the same axis so that identical
+         rotation values cause the wheels to rotate in the same direction. -->
   <joint name="right_front_axle" type="continuous">
     <parent link="right_front_axle_carrier"/>
     <child link="right_front_wheel"/>
     <origin rpy="1.57079633 0 3.14159265"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="102.5" velocity="39.02"/>
+    <limit effort="204.95" velocity="39.02"/>
   </joint>
   <transmission name="right_front_axle_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -327,26 +401,31 @@
     </actuator>
   </transmission>
   <link name="left_rear_axle_carrier">
-    <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </collision>
-    <xacro:null_inertial/>
+    <!-- visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		  
+	  </visual>
+	  <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
+  <!-- The left and right axles have the same axis so that identical
+         rotation values cause the wheels to rotate in the same direction. -->
   <joint name="left_rear_axle" type="continuous">
     <parent link="left_rear_axle_carrier"/>
     <child link="left_rear_wheel"/>
     <origin rpy="1.57079633 0 3.14159265"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="102.5" velocity="39.02"/>
+    <limit effort="204.95" velocity="39.02"/>
   </joint>
   <transmission name="left_rear_axle_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -405,26 +484,31 @@
     </actuator>
   </transmission>
   <link name="right_rear_axle_carrier">
-    <visual>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.1" radius="0.1"/>
-      </geometry>
-    </collision>
-    <xacro:null_inertial/>
+    <!-- visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		  
+	  </visual>
+	  <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>		 
+	  </collision -->
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
+  <!-- The left and right axles have the same axis so that identical
+         rotation values cause the wheels to rotate in the same direction. -->
   <joint name="right_rear_axle" type="continuous">
     <parent link="right_rear_axle_carrier"/>
     <child link="right_rear_wheel"/>
     <origin rpy="1.57079633 0 3.14159265"/>
     <axis xyz="0 0 -1"/>
-    <limit effort="102.5" velocity="39.02"/>
+    <limit effort="204.95" velocity="39.02"/>
   </joint>
   <transmission name="right_rear_axle_trans">
     <type>transmission_interface/SimpleTransmission</type>
@@ -488,6 +572,7 @@
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
   </link>
+  <!-- Hokuyo sensor for simulation -->
   <gazebo reference="hokuyo3d_laser_link">
     <sensor name="hokuyo3d_sensor" type="ray">
       <pose>0 0 0 0 0 0</pose>
@@ -560,8 +645,9 @@
 		<origin xyz="0.3 0.0 0.24" rpy="0 0 0"/> 
 	</xacro:sensor_fotonic>  
 -->
-  <gazebo>
-    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control"/>
-  </gazebo>
+  <!-- gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo -->
+  <!-- ros control plugin -->
 </robot>
 
