@@ -50,7 +50,7 @@
 #include "robotnik_msgs/get_mode.h"
 
 #define DEFAULT_MAX_LINEAR_SPEED	    3.0 //m/s
-#define DEFAULT_MAX_ANGULAR_POSITION	2.0 // rads/s
+#define DEFAULT_MAX_ANGULAR_POSITION	0.5 // rads/s
 
 #define MAX_NUM_OF_BUTTONS			16
 #define MAX_NUM_OF_AXES				8
@@ -125,7 +125,7 @@ private:
 
 
 private:
-	ros::NodeHandle nh_;
+	ros::NodeHandle nh_, pnh_;
 	
 	int axis_linear_speed_, axis_angular_position_;
 	double l_scale_, a_scale_;
@@ -201,13 +201,14 @@ private:
 
 RbcarPad::RbcarPad():
   axis_linear_speed_(1),
-  axis_angular_position_(2)
+  axis_angular_position_(2),
+  pnh_("~")
 {
 	current_speed_lvl = 0.1;
 	// 
-	nh_.param("num_of_buttons", num_of_buttons_, DEFAULT_NUM_OF_BUTTONS);
-	nh_.param("num_of_axes", num_of_axes_, DEFAULT_NUM_OF_AXES);
-	nh_.param("desired_freq", desired_freq_, DEFAULT_HZ);
+	pnh_.param("num_of_buttons", num_of_buttons_, DEFAULT_NUM_OF_BUTTONS);
+	pnh_.param("num_of_axes", num_of_axes_, DEFAULT_NUM_OF_AXES);
+	pnh_.param("desired_freq", desired_freq_, DEFAULT_HZ);
 
 	if(num_of_axes_ > MAX_NUM_OF_AXES){
 		num_of_axes_ = MAX_NUM_OF_AXES;
@@ -218,39 +219,35 @@ RbcarPad::RbcarPad():
 		ROS_INFO("RbcarPad::RbcarPad: Limiting the max number of buttons to %d", MAX_NUM_OF_BUTTONS);
 		}
 
-	nh_.param("topic_joy", joy_topic_, std::string(DEFAULT_JOY));	
+	pnh_.param("topic_joy", joy_topic_, std::string(DEFAULT_JOY));	
 
 
 	// MOTION CONF
-	nh_.param("cmd_topic_vel", cmd_topic_vel, std::string("/rbcar_robot_control/command"));
+	pnh_.param("cmd_topic_vel", cmd_topic_vel, std::string("/rbcar_robot_control/command"));
 	
-	nh_.param("button_dead_man", button_dead_man_, button_dead_man_);
-	nh_.param("button_speed_up", button_speed_up_, button_speed_up_);
-	nh_.param("button_speed_down", button_speed_down_, button_speed_down_); 
-	nh_.param("max_angular_position", max_angular_position_, DEFAULT_MAX_ANGULAR_POSITION); 
-	nh_.param("max_linear_speed_", max_linear_speed_, DEFAULT_MAX_LINEAR_SPEED); 
-	nh_.param("axis_linear_speed", axis_linear_speed_, DEFAULT_AXIS_LINEAR_X); 
-	nh_.param("axis_angular_position", axis_angular_position_, DEFAULT_AXIS_ANGULAR); 
+	pnh_.param("button_dead_man", button_dead_man_, button_dead_man_);
+	pnh_.param("button_speed_up", button_speed_up_, button_speed_up_);
+	pnh_.param("button_speed_down", button_speed_down_, button_speed_down_); 
+	pnh_.param("max_angular_position", max_angular_position_, DEFAULT_MAX_ANGULAR_POSITION); 
+	pnh_.param("max_linear_speed_", max_linear_speed_, DEFAULT_MAX_LINEAR_SPEED); 
+	pnh_.param("axis_linear_speed", axis_linear_speed_, DEFAULT_AXIS_LINEAR_X); 
+	pnh_.param("axis_angular_position", axis_angular_position_, DEFAULT_AXIS_ANGULAR); 
 	ROS_INFO("axis_linear_speed_ = %d, axis_angular = %d", axis_linear_speed_, axis_angular_position_);
 	ROS_INFO("max_linear_speed = %lf, max_angular_speed = %lf", max_linear_speed_, max_angular_position_);
 
 	// DIGITAL OUTPUTS CONF
-	nh_.param("cmd_service_io", cmd_service_io_, cmd_service_io_);
-	nh_.param("output_1", output_1_, output_1_);
-	nh_.param("output_2", output_2_, output_2_);
-	nh_.param("topic_state", topic_state_, std::string("/rbcar_pad/state"));
+	pnh_.param("cmd_service_io", cmd_service_io_, cmd_service_io_);
+	pnh_.param("output_1", output_1_, output_1_);
+	pnh_.param("output_2", output_2_, output_2_);
+	pnh_.param("topic_state", topic_state_, std::string("/rbcar_pad/state"));
 
 	// PANTILT CONF
-	nh_.param("cmd_service_ptz", cmd_service_ptz_, cmd_service_ptz_);
-	nh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
-	nh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
-	nh_.param("button_ptz_pan_right", ptz_pan_right_, ptz_pan_right_);
-	nh_.param("button_ptz_pan_left", ptz_pan_left_, ptz_pan_left_);
+	pnh_.param("cmd_service_ptz", cmd_service_ptz_, cmd_service_ptz_);
+	pnh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
+	pnh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
+	pnh_.param("button_ptz_pan_right", ptz_pan_right_, ptz_pan_right_);
+	pnh_.param("button_ptz_pan_left", ptz_pan_left_, ptz_pan_left_);
 
-	// KINEMATIC MODE 
-	nh_.param("button_kinematic_mode", button_kinematic_mode_, button_kinematic_mode_);
-	nh_.param("cmd_service_set_mode", cmd_set_mode_, cmd_set_mode_);
-	kinematic_mode_ = 1;
 		
 	ROS_INFO("RbcarPad num_of_buttons_ = %d, axes = %d, topic controller: %s, hz = %.2lf", num_of_buttons_, num_of_axes_, cmd_topic_vel.c_str(), desired_freq_);	
 	
@@ -263,21 +260,7 @@ RbcarPad::RbcarPad():
 		fAxes.push_back(0.0);
 	}
 	
-	/*
-	// ROS_INFO("Service PTZ = [%s]", cmd_service_ptz_.c_str());
-	ROS_INFO("Service set_mode = [%s]", cmd_set_mode_.c_str());
-	ROS_INFO("Axis linear = %d", linear_);
-	ROS_INFO("Axis angular = %d", angular_);
-	ROS_INFO("Scale angular = %5.2f", a_scale_);
-	ROS_INFO("Deadman button = %d", dead_man_button_);
-	ROS_INFO("OUTPUT1 button %d", button_output_1_);
-	ROS_INFO("OUTPUT2 button %d", button_output_2_);
-	ROS_INFO("OUTPUT1 button %d", button_output_1_);
-	ROS_INFO("OUTPUT2 button %d", button_output_2_);
-	ROS_INFO("Kinematic mode button %d", button_kinematic_mode_);
-	*/
-
-// HERE
+	
   	this->vel_pub_ = nh_.advertise<ackermann_msgs::AckermannDriveStamped>(this->cmd_topic_vel, 1);
 		
  	// Listen through the node handle sensor_msgs::Joy messages from joystick 
@@ -300,7 +283,7 @@ RbcarPad::RbcarPad():
 	                    diagnostic_updater::FrequencyStatusParam(&min_freq_command, &max_freq_command, 0.1, 10));
 
 	// Advertises new service to enable/disable the pad
-	enable_disable_srv_ = nh_.advertiseService("/rbcar_pad/enable_disable",  &RbcarPad::EnableDisable, this);
+	enable_disable_srv_ = pnh_.advertiseService("enable_disable",  &RbcarPad::EnableDisable, this);
 	//
 	bEnable = true;	// Communication flag enabled by default
 	

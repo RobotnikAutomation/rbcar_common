@@ -21,3 +21,4 @@ button_ptz_pan_left: 7
 button_kinematic_mode: 9
 tilt_increment: 5
 pan_increment: 5
+max_angular_position: 0.52
