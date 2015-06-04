@@ -30,7 +30,7 @@
     </link>
 
     <joint name="base_footprint_joint" type="fixed">
-      <origin xyz="0 0 0.150" rpy="0 0 0" />  <!-- height is the clearance -->
+      <origin xyz="0 0 0.235" rpy="0 0 0" />  <!-- height is the clearance -->
       <parent link="base_footprint"/>
       <child link="base_link" />
     </joint>    
