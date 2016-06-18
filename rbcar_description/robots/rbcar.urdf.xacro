@@ -65,9 +65,20 @@
 		<origin xyz="0.9 0.0 0.450" rpy="0 0.35 0"/>
 	</xacro:sensor_hokuyo3d>
 
-	<xacro:sensor_imu name="imu" parent="base_link">
+	<!--xacro:sensor_imu name="imu" parent="base_link">
 		<origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
-	</xacro:sensor_imu>
+	</xacro:sensor_imu -->
+	
+	
+	<!-- Imu with hector plugin -->
+	<xacro:sensor_imu_hector name="imu" parent="base_link">
+		<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+	</xacro:sensor_imu_hector>
+  
+	<xacro:sensor_gps name="gps" parent="base_link">
+		<origin xyz="-0.25 0 1.25" rpy="0 0 0"/>
+	</xacro:sensor_gps>
+	
 	
 	<!--xacro:sensor_hokuyo_utm30lx name="hokuyo" parent="base_link">
 		<origin xyz="0.0 0.0 0.33" rpy="0 0 0"/>
@@ -79,14 +90,12 @@
 	</xacro:sensor_hokuyo_urg04lx>
 -->
     
-	<!-- xacro:sensor_axis name="camera" parent="base_link">
+<!-- 
+	<xacro:sensor_axis name="camera" parent="base_link">
 		<origin xyz="0.19 0 0.17" rpy="0 ${15*PI/180} 0"/>
 	</xacro:sensor_axis>
-    
-	<xacro:sensor_gps name="gps" parent="base_link">
-		<origin xyz="-0.22 0 0.275" rpy="0 0 0"/>
-	</xacro:sensor_gps -->
-	
+-->
+    	
 <!--
 	<xacro:sensor_asus_xtion_pro name="xtion_pro" parent="base_link">
 		<origin xyz="0.3 0.0 0.3" rpy="0 0 0"/> 
