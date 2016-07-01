@@ -8,6 +8,10 @@
   <maintainer email="rguzman@robotnik.es">Roberto Guzmán</maintainer>
   <maintainer email="cvillar@robotnik.es">Carlos Villar</maintainer>
 
+  <url type="website">http://wiki.ros.org/rbcar_pad</url>
+  <url type="repository">https://github.com/RobotnikAutomation/rbcar_common</url>
+  <url type="bugtracker">https://github.com/RobotnikAutomation/rbcar_common/issues</url>
+
   <license>BSD</license>
 
   <author email="rnavarro@robotnik.es">Román Navarro</author>
