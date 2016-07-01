@@ -4,7 +4,7 @@
   <version>1.0.0</version>
   <description>The rbcar_common package. It contains RBCAR common packages</description>
   
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <maintainer email="cvillar@robotnik.es">Carlos Villar</maintainer>
 
   <license>BSD</license>
 
@@ -15,6 +15,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   
   <run_depend>rbcar_description</run_depend>
+  <run_depend>rbcar_pad</run_depend>
 
   <export><metapackage/></export>
 

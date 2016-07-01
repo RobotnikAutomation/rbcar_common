@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package>
   <name>rbcar_description</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>The rbcar_description package</description>
 
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <maintainer email="cvillar@robotnik.es">Carlos Villar</maintainer>
 
   <license>BSD</license>
 
-  <author email="info@erobotnik.es">Robotnik</author>
+  <author email="rguzman@robotnik.es">Roberto Guzman</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>std_msgs</build_depend>
