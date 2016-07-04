@@ -2,8 +2,8 @@
 Changelog for package rbcar_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2016-07-04)
+------------------
 * Added website
 * Modified dependencies
 * changed hw interface to VelocityJointInterface for traction, added damping and friction to axle and suspension

@@ -2,8 +2,8 @@
 Changelog for package rbcar_pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2016-07-04)
+------------------
 * Added website
 * Modified dependencies
 * rbcar_description: changing 3d sensor position to fit with the real model
