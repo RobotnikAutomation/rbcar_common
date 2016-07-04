@@ -2,6 +2,9 @@
 Changelog for package rbcar_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.1 (2016-07-04)
 ------------------
 * Added website
