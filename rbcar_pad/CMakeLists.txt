@@ -6,6 +6,9 @@ find_package(catkin REQUIRED COMPONENTS
   robotnik_msgs
   roscpp
   sensor_msgs
+  diagnostic_msgs
+  diagnostic_updater
+  ackermann_msgs
 )
 
 catkin_package(
