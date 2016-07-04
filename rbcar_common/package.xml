@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>rbcar_common</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <description>The rbcar_common package. It contains RBCAR common packages</description>
   
   <maintainer email="cvillar@robotnik.es">Carlos Villar</maintainer>
