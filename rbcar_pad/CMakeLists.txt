@@ -9,6 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   diagnostic_msgs
   diagnostic_updater
   ackermann_msgs
+  std_srvs
+  std_msgs
 )
 
 catkin_package(
