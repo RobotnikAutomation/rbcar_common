@@ -2,6 +2,11 @@
 Changelog for package rbcar_pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* modified dependencies
+* Contributors: carlos3dx
+
 1.0.2 (2016-07-04)
 ------------------
 * Added dependencies
