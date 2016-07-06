@@ -2,8 +2,8 @@
 Changelog for package rbcar_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.4 (2016-07-06)
+------------------
 * Modified maintainers
 * Contributors: carlos3dx
 
