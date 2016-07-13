@@ -2,6 +2,9 @@
 Changelog for package rbcar_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.4 (2016-07-06)
 ------------------
 * Modified maintainers
