@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find rbcar_navigation)/maps/willow_garage/willow_garage.yaml"/>
+
+  <!--- Run AMCL -->
+  <include file="$(find rbcar_navigation)/launch/navigation_amcl/amcl.launch" />
+  <remap from="cmd_vel" to="cmd_vel" />
+  
+  <!-- Run move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	<remap from="odom" to="odom"/>
+	<rosparam file="$(find rbcar_navigation)/config_navigation/move_base_params.yaml" command="load" />
+	<rosparam file="$(find rbcar_navigation)/config_navigation/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find rbcar_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rbcar_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rbcar_navigation)/config_navigation/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rbcar_navigation)/config_navigation/global_costmap_params_map.yaml" command="load" />
+  </node>
+    
+  <!-- Rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rbcar_navigation)/config_rviz/move_base.rviz"/>
+  
+</launch>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!--  Global Parameters -->
+  <param name="/use_sim_time" value="true"/>
+
+  <remap from="cmd_vel" to="cmd_vel" />
+  
+  <!-- Run move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  	<rosparam file="$(find rbcar_navigation)/config_navigation/diff_drive/costmap_common_params.yaml" command="load" ns="global_costmap" />
+  	<rosparam file="$(find rbcar_navigation)/config_navigation/diff_drive/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  	<rosparam file="$(find rbcar_navigation)/config_navigation/diff_drive/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rbcar_navigation)/config_navigation/diff_drive/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rbcar_navigation)/config_navigation/diff_drive/teb_local_planner_params.yaml" command="load" />
+    
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="planner_frequency" value="1.0" />
+    <param name="planner_patience" value="5.0" />
+
+	<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+	<param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="15.0" />
+  </node>
+   
+  <!-- Rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rbcar_navigation)/config_rviz/move_base.rviz"/>
+  
+</launch>

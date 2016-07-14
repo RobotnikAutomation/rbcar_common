@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <name>rbcar_navigation</name>
+  <version>1.0.0</version>
+  <description>
+    This package configures the move_base stack and makes use of the gmapping and amcl algorithms to
+    move the rbcar robot 
+  </description>
+  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <license>BSD</license>
+
+  <url>http://ros.org/wiki/rbcar_navigation</url>
+  <author>Robotnik</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+    
+  <run_depend>message_runtime</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>gmapping</run_depend>
+  <run_depend>amcl</run_depend>
+  <run_depend>robot_pose_efk</run_depend>
+  <run_depend>map_server</run_depend>
+  <run_depend>rviz</run_depend>
+  <run_depend>topic_tools</run_depend>
+  <run_depend>tf</run_depend>
+  <!-- run_depend>teb_local_planner</run_depend -->
+     
+</package>
+
+
+
