@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
 <package>
   <name>rbcar_description</name>
-  <version>0.0.0</version>
+  <version>1.0.5</version>
   <description>The rbcar_description package</description>
 
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <maintainer email="rnavarro@robotnik.es">Román Navarro</maintainer>
+  <maintainer email="rguzman@robotnik.es">Roberto Guzmán</maintainer>
+  <maintainer email="cvillar@robotnik.es">Carlos Villar</maintainer>
+    <url type="website">http://wiki.ros.org/rbcar_description</url>
+  <url type="repository">https://github.com/RobotnikAutomation/rbcar_common</url>
+  <url type="bugtracker">https://github.com/RobotnikAutomation/rbcar_common/issues</url>
 
   <license>BSD</license>
 
-  <author email="info@erobotnik.es">Robotnik</author>
+  <author email="rguzman@robotnik.es">Roberto Guzman</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>std_msgs</build_depend>
