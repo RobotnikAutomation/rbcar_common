@@ -2,6 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from ackermann_msgs.msg import AckermannDriveStamped
+from math import asin
 
 def cmd_vel_callback(msg):
 	
@@ -13,7 +14,19 @@ def cmd_vel_callback(msg):
 		 spin = 1.0
 	else:
 		 spin = -1.0
-	ack_msg.drive.steering_angle = msg.angular.z * spin * 5.0;		
+	
+	# w = v / R    w:angular speed, v:linear speed, R:turning radius
+	# sin(delta) = L / R    delta:steering angle, L:wheelbase, i.e. distance from rear wheels to steering wheels, R: turning radius
+	L = 1.650  # TODO: should be param 
+	if msg.angular.z == 0:
+		delta = 0
+	else:
+		R = msg.linear.x / msg.angular.z
+		delta = asin(L/R)
+	
+	#Kp = 1.0
+	#ack_msg.drive.steering_angle = msg.angular.z * spin * Kp;		
+	ack_msg.drive.steering_angle = delta;		
 	ack_msg.drive.steering_angle_velocity = 0.0
 	ack_msg.drive.speed = msg.linear.x
 	ack_msg.drive.acceleration = 0.0
