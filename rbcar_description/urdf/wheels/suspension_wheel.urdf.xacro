@@ -17,9 +17,9 @@
        the shock absorbers are fully extended. axle_length is the distance
        from a U joint to the corresponding hex hub. wheel_travel is the
        vertical wheel travel. -->
-  <xacro:property name="wheelbase" value="1.650"/>
-  <xacro:property name="hex_hub_dist" value="0.900"/>  <!-- 1.127 0.742 check -->
-  <xacro:property name="axle_length" value="0.120"/>
+  <!-- xacro:property name="wheelbase" value="1.650"/ -->
+  <!-- xacro:property name="hex_hub_dist" value="0.900"/-->  <!-- 1.127 0.742 check -->
+  <!-- xacro:property name="axle_length" value="0.120"/ -->
   <xacro:property name="wheel_travel" value="0.1"/>
   <xacro:property name="shock_z_offset" value="0.05"/>
 

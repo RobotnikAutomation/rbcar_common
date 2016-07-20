@@ -9,12 +9,12 @@
 	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
 	<!-- Import Robotnik CAR base elements -->
-	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
+	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base_ezgo.urdf.xacro" />
   
 	<!-- Import Robotnik CAR wheels -->
-    <xacro:property name="wheelbase" value="1.650"/>
-    <xacro:property name="hex_hub_dist" value="0.900"/>  
-    <xacro:property name="axle_length" value="0.120"/>	
+	<xacro:property name="wheelbase" value="1.800"/>
+	<xacro:property name="hex_hub_dist" value="1.080"/>	
+    <xacro:property name="axle_length" value="0.160"/>	
 	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel.urdf.xacro" />
     
 	<!-- Import all available sensors -->
@@ -27,8 +27,8 @@
 	<xacro:property name="PI" value="3.1415926535897931"/>
   
 	<!-- Wheel parameters -->
-	<xacro:property name="wheel_offset_x" value="1.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
-	<xacro:property name="wheel_offset_y" value="0.75" />    
+	<xacro:property name="wheel_offset_x" value="0.9" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
+	<xacro:property name="wheel_offset_y" value="0.515" />    
 	<xacro:property name="wheel_offset_z" value="0.0" />
 
 	<!-- Flag to select the high or low quality model -->
