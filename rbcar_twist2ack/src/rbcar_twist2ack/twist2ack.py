@@ -2,7 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from ackermann_msgs.msg import AckermannDriveStamped
-from math import asin
+from math import atan
 
 def cmd_vel_callback(msg):
 	
