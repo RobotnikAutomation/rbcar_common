@@ -2,7 +2,7 @@
 import rospy
 from geometry_msgs.msg import Twist
 from ackermann_msgs.msg import AckermannDriveStamped
-from math import asin
+from math import atan
 
 def cmd_vel_callback(msg):
 	
@@ -22,7 +22,7 @@ def cmd_vel_callback(msg):
 		delta = 0
 	else:
 		R = msg.linear.x / msg.angular.z
-		delta = asin(L/R)
+		delta = atan(L/R)
 	
 	#Kp = 1.0
 	#ack_msg.drive.steering_angle = msg.angular.z * spin * Kp;		
