@@ -9,7 +9,8 @@
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="wheel_width" value="0.175" />
-
+  <xacro:property name="clearance" value="${tire_dia/2.0}" />
+  
   <!-- BASE FOOTPRINT -->
   <xacro:if value="${publish_bf}">
     <link name="base_footprint">
@@ -30,7 +31,7 @@
     </link>
 
     <joint name="base_footprint_joint" type="fixed">
-      <origin xyz="0 0 0.235" rpy="0 0 0" />  <!-- height is the clearance -->
+      <origin xyz="0 0 ${clearance}" rpy="0 0 0" />  <!-- height is the clearance -->
       <parent link="base_footprint"/>
       <child link="base_link" />
     </joint>    

@@ -18,7 +18,7 @@
        from a U joint to the corresponding hex hub. wheel_travel is the
        vertical wheel travel. -->
   <xacro:property name="wheelbase" value="1.650"/>
-  <xacro:property name="hex_hub_dist" value="0.900"/>  <!-- 1.127 0.742 check -->
+  <xacro:property name="hex_hub_dist" value="0.900"/>  <!-- 1.127 0.742 0.900 check -->
   <xacro:property name="axle_length" value="0.120"/>
   <xacro:property name="wheel_travel" value="0.1"/>
   <xacro:property name="shock_z_offset" value="0.05"/>
@@ -91,7 +91,8 @@
      
       <origin xyz="${fr_reflect * wheelbase / 2}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
-                   ${(wheel_travel / 2) - shock_z_offset}"/>
+                   ${-wheel_travel}"/>
+                  <!-- ${(wheel_travel / 2) - shock_z_offset}"/-->
       <axis xyz="0 0 -1"/>
       <limit lower="${-wheel_travel / 2}" upper="${wheel_travel / 2}"
              effort="${shock_eff_limit}" velocity="${shock_vel_limit}"/>
