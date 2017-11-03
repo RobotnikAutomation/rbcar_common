@@ -90,6 +90,7 @@
 
 	<xacro:sensor_hokuyo_urg04lx prefix="hokuyo1" parent="base_link">
 		<origin xyz="-1.4 0.0 0.33" rpy="0 0 3.1416"/>
+
 	</xacro:sensor_hokuyo_urg04lx>
 
     
