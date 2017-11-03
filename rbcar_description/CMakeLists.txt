@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   std_srvs
   tf
+  robotnik_sensors
 )
 
 catkin_package(
