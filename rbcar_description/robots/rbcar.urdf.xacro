@@ -61,7 +61,7 @@
 
 
 	<!-- SENSORS -->    
-    <xacro:sensor_hokuyo3d name="hokuyo3d" parent="base_link">
+    <xacro:sensor_hokuyo3d prefix="hokuyo3d" parent="base_link">
 		<origin xyz="0.9 0.0 0.450" rpy="0 0.35 0"/>
 	</xacro:sensor_hokuyo3d>
 
@@ -71,21 +71,21 @@
 	
 	
 	<!-- Imu with hector plugin -->
-	<xacro:sensor_imu_hector name="imu" parent="base_link">
+	<xacro:sensor_imu_hector prefix="imu" parent="base_link">
 		<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
 	</xacro:sensor_imu_hector>
   
-	<xacro:sensor_gps name="gps" parent="base_link">
+	<xacro:sensor_gps prefix="gps" parent="base_link">
 		<origin xyz="-0.25 0 1.25" rpy="0 0 0"/>
 	</xacro:sensor_gps>
 	
 	
-	<xacro:sensor_hokuyo_utm30lx name="hokuyo" parent="base_link">
+	<xacro:sensor_hokuyo_utm30lx prefix="hokuyo" parent="base_link">
 		<origin xyz="1.0 0.0 0.33" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_utm30lx>
   
 
-	<xacro:sensor_hokuyo_urg04lx name="hokuyo1" parent="base_link">
+	<xacro:sensor_hokuyo_urg04lx prefix="hokuyo1" parent="base_link">
 		<origin xyz="-1.4 0.0 0.33" rpy="0 0 3.1416"/>
 	</xacro:sensor_hokuyo_urg04lx>
 
