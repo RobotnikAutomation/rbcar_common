@@ -12,9 +12,6 @@
 	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
   
 	<!-- Import Robotnik CAR wheels -->
-    <xacro:property name="wheelbase" value="1.650"/>
-    <xacro:property name="hex_hub_dist" value="0.900"/>  
-    <xacro:property name="axle_length" value="0.120"/>	
 	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel.urdf.xacro" />
     
 	<!-- Import all available sensors -->
