@@ -61,11 +61,11 @@
 
 
 	<!-- SENSORS -->    
-    <xacro:sensor_hokuyo3d name="hokuyo3d" parent="base_link">
+    <xacro:sensor_hokuyo3d prefix="hokuyo3d" parent="base_link">
 		<origin xyz="0.9 0.0 0.450" rpy="0 0.35 0"/>
 	</xacro:sensor_hokuyo3d>
 
-	<xacro:sensor_imu name="imu" parent="base_link">
+	<xacro:sensor_imu prefix="imu" parent="base_link">
 		<origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
 	
