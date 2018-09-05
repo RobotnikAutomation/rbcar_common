@@ -261,7 +261,8 @@ RbcarPad::RbcarPad():
 	}
 	
 	
-  	this->vel_pub_ = nh_.advertise<ackermann_msgs::AckermannDriveStamped>(this->cmd_topic_vel, 1);
+  	//this->vel_pub_ = nh_.advertise<ackermann_msgs::AckermannDriveStamped>(this->cmd_topic_vel, 1);
+  	this->vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/rbcar_pad/cmd_vel", 1);
 		
  	// Listen through the node handle sensor_msgs::Joy messages from joystick 
 	joy_sub_ = nh_.subscribe<sensor_msgs::Joy>(joy_topic_, 1, &RbcarPad::joyCallback, this);
@@ -344,6 +345,14 @@ void RbcarPad::ControlLoop(){
 	
 	double desired_linear_speed = 0.0, desired_angular_position = 0.0;
 	ackermann_msgs::AckermannDriveStamped ref_msg;
+	geometry_msgs::Twist vel_msg;
+	
+	vel_msg.angular.x = 0.0;
+	vel_msg.angular.y = 0.0;
+	vel_msg.angular.z = 0.0;
+	vel_msg.linear.x = 0.0;
+	vel_msg.linear.y = 0.0;
+	vel_msg.linear.z = 0.0;
 	
 	ros::Rate r(desired_freq_);   
 
@@ -360,15 +369,17 @@ void RbcarPad::ControlLoop(){
 				ref_msg.drive.steering_angle_velocity = 0.0;
 			
 				desired_linear_speed = max_linear_speed_ * current_speed_lvl * fAxes[axis_linear_speed_];
-				desired_angular_position = max_angular_position_ * fAxes[axis_angular_position_];
+				desired_angular_position =  max_angular_position_ * fAxes[axis_angular_position_];
 				
 				// ROS_INFO("axis_angular_position_ %d   desired_angular_position=%5.2f", axis_angular_position_, desired_angular_position);
 				
-				ref_msg.drive.steering_angle = desired_angular_position;
-				ref_msg.drive.speed = desired_linear_speed;
-				
+				//ref_msg.drive.steering_angle = desired_angular_position;
+				//ref_msg.drive.speed = desired_linear_speed;
+				vel_msg.linear.x = 	desired_linear_speed;
+				vel_msg.angular.z = desired_angular_position;				
+
 				// Publish into command_vel topic
-				vel_pub_.publish(ref_msg);
+				vel_pub_.publish(vel_msg);
 			
 				if(vButtons[button_speed_up_].IsReleased()){
 					current_speed_lvl += 0.1;
@@ -389,8 +400,10 @@ void RbcarPad::ControlLoop(){
 				
 				ref_msg.drive.steering_angle = 0.0;
 				ref_msg.drive.speed = 0.0;
+				vel_msg.linear.x = 	0.0;
+				vel_msg.angular.z = 0.0;
 				//ROS_INFO("RbcarPad::ControlLoop: Deadman released!");
-				vel_pub_.publish(ref_msg);// Publish into command_vel topic
+				vel_pub_.publish(vel_msg);// Publish into command_vel topic
 			}
 		}
 		
