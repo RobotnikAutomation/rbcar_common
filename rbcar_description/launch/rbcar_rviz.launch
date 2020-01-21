@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbcar_description)/robots/rbcar.urdf.xacro'" />
+
+  <include file="$(find rbcar_description)/launch/rbcar_state_robot.launch">
+    <arg name="urdf_file" value="$(arg urdf_file)" />
+  </include>
+  
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="TRUE"/>
+  </node>
+
+  <!-- Show in Rviz   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rbcar_description)/launch/rbcar.rviz"/> 
+  
+</launch>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="prefix" default="rbcar"/>
+	<arg name="cmd_vel_topic" default="move_base/cmd_vel"/>
+	<arg name="odom_topic" default="robotnik_base_controller/odom"/>
+	<arg name="global_frame" default="world"/>
+	<arg name="odom_frame" default="odom"/>
+	<arg name="base_frame" default="base_footprint"/>
+
+	<node name="static_tf0" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 world odom 100"/>
+
+	<!-- Run move_base -->
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+		<rosparam file="$(find rbcar_navigation)/config/move_base_params.yaml" command="load" />
+		<rosparam file="$(find rbcar_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find rbcar_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find rbcar_navigation)/config/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find rbcar_navigation)/config/global_costmap_params_no_map_for_gps.yaml" command="load" />
+		<rosparam file="$(find rbcar_navigation)/config/teb_local_planner_params_for_gps.yaml" command="load" />
+        <rosparam file="$(find rbcar_navigation)/config/sbpl_global_planner_params.yaml" command="load" />
+        <!-- navfn/NavfnROS -->
+
+		<param name="local_costmap/global_frame" value="$(arg odom_frame)"/>
+		<param name="local_costmap/robot_base_frame" value="$(arg base_frame)"/>
+		<param name="global_costmap/global_frame" value="$(arg global_frame)"/>
+		<param name="global_costmap/robot_base_frame" value="$(arg base_frame)"/>
+		<param name="TebLocalPlannerROS/map_frame" value="$(arg global_frame)"/>
+		<param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>
+		<remap from="cmd_vel" to="$(arg cmd_vel_topic)" />
+		<remap from="odom" to="$(arg odom_topic)" />
+
+		<param name="SBPLLatticePlanner/primitive_filename" value="$(find rbcar_navigation)/config/polaris_noback.mprim" />
+	</node>
+
+</launch>

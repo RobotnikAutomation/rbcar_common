@@ -1,0 +1,18 @@
+robotnik_base_controller:
+  type: "ackermann_steering_controller/AckermannSteeringController"
+  rear_wheel: 'right_front_axle'
+  front_steer: 'right_steering_joint'
+  traction_wheel: ['right_front_axle', 'left_front_axle', 'right_rear_axle', 'left_rear_axle']
+  steer_wheel: ['right_steering_joint', 'left_steering_joint']
+  pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+  twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+  enable_odom_tf: true #false 
+  open_loop: false # is odometry open_loop?
+  base_frame_id: base_footprint
+  wheel_separation_h: 1.834
+  enable_odom_tf: true
+
+joint_read_state_controller:
+  type: joint_state_controller/JointStateController 
+  publish_rate: 100.0
+

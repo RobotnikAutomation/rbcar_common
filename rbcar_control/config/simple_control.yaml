@@ -1,0 +1,43 @@
+#rear_axle_controller:
+#  type: effort_controllers/JointVelocityController
+#  joint: rear_axle_joint
+#  pid:
+#    p: 2
+#    i: 2
+#    d: 0.002
+#    i_clamp_min: -200
+#    i_clamp_max: -200
+#    antiwindup: true
+#    publish_state: true
+
+rear_axle_controller:
+  type: traction_controller/TractionController
+  joint: rear_axle_joint
+  pid:
+    p: 2
+    i: 2
+    d: 0.002
+    i_clamp_min: -200
+    i_clamp_max: -200
+    antiwindup: true
+    publish_state: true
+  cmd_watchdog_duration: 1
+  linear_speed_limit: 1000
+  linear_acceleration_limit: 100
+  linear_deceleration_limit: 100
+
+robotnik_base_hw:
+    Kp: 2.0
+    Ki: 2.0
+    Kd: 0.002
+    upper_limit: 3000
+    lower_limit: -3000
+    windup_limit: 200
+    cutoff_frequency: 20
+
+joint_read_state_controller:
+  type: joint_state_controller/JointStateController 
+  publish_rate: 100.0
+
+joint_read_command_controller:
+  type: joint_read_command_controller/JointReadCommandController
