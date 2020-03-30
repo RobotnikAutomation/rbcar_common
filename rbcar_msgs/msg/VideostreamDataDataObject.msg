@@ -1,0 +1,11 @@
+int32 payload_id
+string vehicle_id
+GimbalType gimbal
+float64 identity_timestamp
+float64 frame
+string filename
+int32 mission_id
+AttitudeType attitude
+CameraType camera
+PositionType position
+float64 resolution

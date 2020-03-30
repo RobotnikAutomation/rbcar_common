@@ -1,7 +1,11 @@
 # rbcar_common
-
 Robotnik Car common packages
 
-## Depedencies
+## rbcar_description
+It contains the [urdf](http://wiki.ros.org/urdf), meshes, and other elements needed in the description are contained here. 
 
-- to use GPU accelerated simulation of 3D Lidar: [https://github.com/RobotnikAutomation/velodyne_simulator](https://github.com/RobotnikAutomation/velodyne_simulator)
+##rbcar_pad
+This package allows controlling the robot using a joystick or game-pad, by sending the messages received through the joystick input, correctly adapted, to the correct command topic.
+
+# Install the following dependencies
+Ackermann drive controller: included in the directory rbcar_common/rbcar_control/lib/

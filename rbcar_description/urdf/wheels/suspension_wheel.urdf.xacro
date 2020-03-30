@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="wheel" xmlns:xacro="http://wiki.ros.org/xacro">
 
   <!-- hub_dia and tire_dia are the diameters of the hub and tire,
        respectively. hex_hub_depth is the distance that the hex hub is

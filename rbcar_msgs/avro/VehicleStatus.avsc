@@ -1,0 +1,82 @@
+{
+  "name": "VehicleStatus",
+  "type": "record",
+  "namespace": "com.rbcar.avro.vehiclestatus",
+  "fields": 
+  [
+    {
+      "name": "DataObject",
+      "type": 
+      {
+        "name": "DataObject",
+        "type": "record",
+        "fields": 
+        [
+          {
+            "name": "uxv_id",
+            "type": "string"
+          },
+          {
+            "name": "isAvailable",
+            "type": "boolean"
+          },
+          {
+            "name": "status",
+            "type": "string"
+          },   
+          {
+            "name": "home_location",
+            "type": "string"
+          },                   
+          {
+            "name": "mission_id",
+            "type": "int"
+          },
+          {
+            "name": "uxv_type",
+            "type": "string"
+          },
+          {
+            "name": "sensors",
+            "type": 
+            {
+              "name":"SensorType",
+              "type":"record",
+              "fields":
+              [
+                {
+                    "name":"sensor_id",
+                    "type":"int"
+                },
+                {
+                    "name":"name",
+                    "type":"string"
+                },
+                {
+                    "name":"type",
+                    "type":"string"
+                },
+                {
+                    "name":"status",
+                    "type":"string"
+                }                    
+              ]
+            }
+          },
+          {
+            "name": "identity_timestamp",
+            "type": "double"
+          }          
+  		  ]
+      }
+    },
+    {
+      "name": "DataStructureType",
+      "type": "string"
+    },
+    {
+      "name": "SenderID",
+      "type": "string"
+    }
+  ]
+}

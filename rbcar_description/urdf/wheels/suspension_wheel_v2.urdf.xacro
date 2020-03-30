@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="wheel" xmlns:xacro="http://wiki.ros.org/xacro">
 
   <!-- hub_dia and tire_dia are the diameters of the hub and tire,
        respectively. hex_hub_depth is the distance that the hex hub is
@@ -83,10 +83,10 @@
 
   <!-- Shock absorber -->
   <xacro:macro name="shock"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect child">
+               params="lr_prefix fr_prefix lr_reflect fr_reflect child parent">
 
     <joint name="${lr_prefix}_${fr_prefix}_shock" type="prismatic">
-      <parent link="base_link"/>
+      <parent link="${parent}"/>
       <child link="${child}"/>
       <xacro:if value="${fr_prefix=='front'}">
         <xacro:property name="hex_hub_dist" value="1.03802"/>
@@ -94,7 +94,7 @@
       <xacro:if value="${fr_prefix=='rear'}">
         <xacro:property name="hex_hub_dist" value="1.2385"/>
       </xacro:if>
-      <origin xyz="${fr_reflect * wheelbase / 2}
+      <origin xyz="${fr_reflect * wheelbase / 2 + 0.917}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
                    ${(wheel_travel / 2) - shock_z_offset}"/>
 
@@ -179,7 +179,7 @@
         </xacro:if>
         <geometry>
           <!--cylinder radius="${tire_dia / 2}" length="${tire_width}"/-->
-          <mesh filename="package://rbcar_description/meshes/wheels/rbcar_wheel.STL"/>
+          <mesh filename="package://rbcar_description/meshes/wheels/rbcar_wheel.stl"/>
         </geometry>
         <material name="tire_mat"/>
       </visual>
@@ -208,10 +208,10 @@
 
   <!-- Front wheel -->
   <xacro:macro name="front_wheel"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect">
+               params="lr_prefix fr_prefix lr_reflect fr_reflect parent">
     <xacro:shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
-                 child="${lr_prefix}_steering_link"/>
+                 child="${lr_prefix}_steering_link" parent="${parent}"/>
 
     <link name="${lr_prefix}_steering_link">
 	  <!-- visual>
@@ -257,10 +257,10 @@
 
   <!-- Rear wheel -->
   <xacro:macro name="rear_wheel"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect">
+               params="lr_prefix fr_prefix lr_reflect fr_reflect parent">
     <xacro:shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
-                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
-                 child="${lr_prefix}_${fr_prefix}_axle_carrier"/>
+                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}" 
+                 child="${lr_prefix}_${fr_prefix}_axle_carrier" parent="${parent}"/>
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>
   </xacro:macro>

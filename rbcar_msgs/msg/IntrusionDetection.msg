@@ -1,0 +1,11 @@
+string vehicle_id
+string alert_category
+int32 alert_uuid
+int64 alert_end_time
+string alert_text
+string details
+string alert_title
+int64 alert_star_time
+int32 alert_level
+string alert_source
+string location

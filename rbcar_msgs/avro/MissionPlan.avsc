@@ -1,0 +1,81 @@
+{
+  "name": "MissionPlan",
+  "type": "record",
+  "namespace": "com.rbcar.avro.missionplan",
+  "fields": [
+    {
+      "name": "DataObject",
+      "type": {
+        "name": "MissionPlanDataObject",
+        "type": "record",
+        "fields": [
+          {
+            "name": "RoutePathSegment",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "RoutePathSegment",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "path_segment_id",
+                    "type": "int"
+                  },
+                  {
+                    "name": "WayPoint",
+                    "type": {
+                      "name": "WayPoint",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "altitude",
+                          "type": "float"
+                        },
+                        {
+                          "name": "latitude",
+                          "type": "double"
+                        },
+                        {
+                          "name": "waypoint_kind",
+                          "type": ["int", "null"]
+                        },
+                        {
+                          "name": "turn_point_kind",
+                          "type": ["string", "null"]
+                        },
+                        {
+                          "name": "longitude",
+                          "type": "double"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "mission_id",
+            "type": "int"
+          },
+          {
+            "name": "vehicle_id",
+            "type": "string"
+          },
+          {
+            "name": "speed",
+            "type": ["float", "null"]
+          }
+        ]
+      }
+    },
+    {
+      "name": "DataStructureType",
+      "type": "string"
+    },
+    {
+      "name": "SenderID",
+      "type": "string"
+    }
+  ]
+}

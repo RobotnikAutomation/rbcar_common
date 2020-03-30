@@ -1,0 +1,11 @@
+AccelerationType acceleration
+float32 bearing
+string vehicle_id
+PositionType position_home
+int32 mission_id
+AttitudeType attitude
+VelocityType velocity
+AccelerationType acceleration_gyro
+AutopilotVelocityType autopilot
+PositionType position
+float32 velocity_module

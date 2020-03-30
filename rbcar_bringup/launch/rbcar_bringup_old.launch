@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="id_robot" default="rbcar"/>
+  <arg name="prefix" default="$(arg id_robot)_"/>
+  <arg name="sim" default="true"/>
+  <include file="$(find rbcar_sim_bringup)/launch/rbcar_complete.launch" if="$(arg sim)"/>
+
+  <group ns="$(arg id_robot)">
+
+    <include file="$(find rbcar_pad)/launch/ps4_pad.launch"/>
+    <!--include file="$(find rbcar_navigation)/launch/twist2ackermann.launch"/-->
+
+    <!-- UTM odometry node-->
+    <node name="utm_odometry_node" pkg="gps_common" type="utm_odometry_node">
+      <!-- remap from="odom" to="vo1"/ -->      <!-- if two gpss used, otherwise -->
+      <remap from="odom" to="gps/utm_coords" />
+      <remap from="fix" to="gps/fix" />
+      <param name="rot_covariance" value="99999" />
+      <param name="frame_id" value="world" />
+    </node>
+    <include file="$(find rbcar_localization)/launch/navsat_transform_node.launch"/>
+    <include file="$(find rbcar_localization)/launch/robot_localization_world.launch"/>
+
+    <!--Move base-->
+    <include file="$(find rbcar_navigation)/launch/move_base.launch"/>
+
+    <!--Start robot_local_control-->
+    <!--include file="$(find robot_local_control_bringup)/launch/robot_local_control_complete.launch">
+  		<arg name="id_robot" value=""/>
+  		<arg name="prefix" value=""/>
+  		<arg name="id_robot_empty" value="true"/>
+  	</include>
+    <include file="$(find rbcar_navigation)/launch/move_base_dual2.launch">
+    </include-->
+
+    <!--Start robotnik_waypoint_teaching -->
+    <!--include file="$(find robotnik_waypoint_teaching)/launch/robotnik_waypoint_teaching.launch"/-->
+
+    <!--RMS-->
+    <!--include file="$(find robotnik_rms)/launch/rms.launch"/-->
+
+    <!--Start web services -->
+    <include file="$(find robotnik_web)/launch/web_launch.launch"/>
+
+  </group>
+
+</launch>

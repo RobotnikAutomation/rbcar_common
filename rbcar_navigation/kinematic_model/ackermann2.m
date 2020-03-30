@@ -7,7 +7,7 @@ tiempo = 0:ts:T; % para generar tantas muestras por segundo
 n = length(tiempo);
 
 % tamaño de las celdas, se debe de corresponder con la resolución del mapa
-spatial_resolution = 0.2; 
+spatial_resolution = 1;
 % orientación discretizada de las celdas, se corresponde con el
 % numberofangles?
 angular_resolution = 2*pi/16; 
@@ -23,7 +23,7 @@ poses = length(idx_poses);
 wheelbase_ack = 1.83; % distancia entre ejes, 1.65 rbcar, 0.335 toy
 % recto
 % distancia lineal recorrida
-d_ack_straight =        [0.5 2];
+d_ack_straight =        [1 10];
 % que en velocidad es
 v_ack_straight =        d_ack_straight/T;
 % angulo de giro
@@ -33,7 +33,7 @@ cost_straight =         [  1  1];
 
 % con giros
 v_ack_turn = 2; % velocidad de avance
-arange_ack_turn = [0.1:0.05:0.6 -0.1:-0.05:-0.6]; % % rango de angulos del volante
+arange_ack_turn = [0.1:0.025:0.45 -0.1:-0.025:-0.45]; % % rango de angulos del volante
 % arange_ack_turn = [0.1:0.1:0.7 -0.1:-0.1:-0.7];
 cost_turn =  2;
 cost_turnback = 15;
@@ -79,7 +79,7 @@ fprintf(fout, 'totalnumberofprimitives: %d\n', prims_per_angle*numberofangles);
 
 
 
-draw = 0;
+draw = 1;
 
 if draw
     figure(1);
@@ -146,7 +146,7 @@ for angle_i=1:numberofangles
     xlim([-3 3]);
     ylim([-3 3]);
     if draw
-%        pause(2)
+        pause(2)
     end
 end
 close

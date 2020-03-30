@@ -9,6 +9,7 @@
     output="screen" args="					  
 					  robotnik_base_controller
                       joint_read_state_controller
+                      joint_read_command_controller
                       "/>
 					  <!--left_front_shock_controller-->
 					  <!--right_front_shock_controller-->

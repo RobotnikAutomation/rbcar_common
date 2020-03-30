@@ -1,0 +1,3 @@
+string SenderID
+string DataStructureType
+MissionExecutionDataObject DataObject

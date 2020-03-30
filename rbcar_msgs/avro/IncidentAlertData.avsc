@@ -1,0 +1,79 @@
+{
+    "name": "IncidentAlertData",
+	"type": "record",
+    "namespace": "com.rbcar.avro.incidentalert",
+    "fields": [
+		{
+            "name": "alert_uuid",
+            "type": "string"
+        }, {
+            "name": "alert_level",
+            "type": "int"
+        }, {
+            "name": "alert_title",
+            "type": "string"
+        }, {
+            "name": "alert_text",
+            "type": "string"
+        }, {
+            "name": "alert_category",
+            "type": "string"
+        }, {
+            "name": "alert_start_time",
+            "type": "string"
+        }, {
+            "name": "alert_source",
+            "type": "string",
+            "default": "KBS"
+        }, 
+		{
+            "name": "location",
+            "type": {
+				"name": "Location",
+                "type": "record",
+                "fields": [
+					{
+                        "name": "type",
+                        "type": ["string", "null"],
+                        "default": "Point"
+                    }, 
+					{
+                        "name": "coordinates",
+                        "type": [{
+                                "type": "array",
+                                "items": "float"
+                            }, "null"]
+                    }
+                ]
+            }
+        }, 
+		{
+            "name": "vehicle_id",
+            "type": ["string", "null"]
+        }, 
+		{
+            "name": "details",
+            "type": {
+				"name": "Details",
+                "type": "record",
+                "fields": [{
+                        "name": "incident_type",
+                        "type": "string"
+                    }, {
+                        "name": "detection_entity",
+                        "type": "string"
+                    }, {
+                        "name": "detection_time",
+                        "type": ["string", "null"]
+                    }, {
+                        "name": "analysis_document",
+                        "type": ["string", "null"]
+                    }, {
+                        "name": "source_document",
+                        "type": ["string", "null"]
+                    }
+                ]
+            }
+        }
+    ]
+}

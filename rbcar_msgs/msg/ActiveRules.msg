@@ -1,0 +1,2 @@
+string activatingEventSegmentId
+string activeRule

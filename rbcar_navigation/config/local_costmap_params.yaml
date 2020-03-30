@@ -1,11 +1,11 @@
 local_costmap:
-  global_frame: /odom
-  robot_base_frame: /base_footprint
-  update_frequency: 5.0
+  global_frame: odom
+  robot_base_frame: base_link
+  update_frequency: 10.0
   static_map: false
   rolling_window: true
-  width: 10.0 #5
-  height: 10.0 #5
+  width: 30.0 #5
+  height: 30.0 #5
   resolution: 0.05 #0.05
 
   # padding is 0.1 by default, making difficult to pass through narrow places
@@ -14,3 +14,7 @@ local_costmap:
   plugins:
     - name: obstacle_layer
       type: "costmap_2d::VoxelLayer"
+
+  obstacle_layer:
+    enabled: false
+

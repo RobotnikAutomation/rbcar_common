@@ -90,7 +90,7 @@
         <!-- Placeholders for input remapping. Set your topic names as the "to" values.-->
         <!-- remap from="/gps/fix" to="/mavros/gps/fix"/--> <!-- used to compute the absolute position in utm coordinates -->
         <!-- remap from="/gps/fix" to="/ublox_gps/fix" / -->
-        <remap from="/gps/fix" to="gps/fix" />
+        <!--<remap from="/gps/fix" to="gps/fix" />-->
 
         <!-- Used to get the current odometry
              It should be the output of the 'world' instance of robot_localization -->

@@ -1,0 +1,326 @@
+{
+  "name": "MyClass",
+  "type": "record",
+  "namespace": "com.rbcar.avro.missiondescription",
+  "fields": [
+    {
+      "name": "DataStructureType",
+      "type": "string"
+    },
+    {
+      "name": "SenderID",
+      "type": "string"
+    },
+    {
+      "name": "mission_id",
+      "type": "int"
+    },
+    {
+      "name": "Mission_Type",
+      "type": {
+        "type": "array",
+        "items": "string"
+      }
+    },
+    {
+      "name": "DataObject",
+      "type": {
+        "name": "DataObject",
+        "type": "record",
+        "fields": [
+          {
+            "name": "Singles",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "Singles_record",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "vehicle_id",
+                    "type": "string"
+                  },
+                  {
+                    "name": "speed",
+                    "type": "int"
+                  },
+                  {
+                    "name": "path_id",
+                    "type": "int"
+                  },
+                  {
+                    "name": "path_kind",
+                    "type": "int"
+                  },
+                  {
+                    "name": "start_time",
+                    "type": "string"
+                  },
+                  {
+                    "name": "segments",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "name": "segments_record",
+                        "type": "record",
+                        "fields": [
+                          {
+                            "name": "path_segment_id",
+                            "type": "int"
+                          },
+                          {
+                            "name": "waypoint_kind",
+                            "type": "int"
+                          },
+                          {
+                            "name": "altitude",
+                            "type": "int"
+                          },
+                          {
+                            "name": "position",
+                            "type": {
+                              "name": "position",
+                              "type": "record",
+                              "fields": [
+                                {
+                                  "name": "latitude",
+                                  "type": "float"
+                                },
+                                {
+                                  "name": "longitude",
+                                  "type": "float"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "name": "Sensors",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "name": "Sensors_record",
+                        "type": "record",
+                        "fields": [
+                          {
+                            "name": "time",
+                            "type": "int"
+                          },
+                          {
+                            "name": "sensor_type",
+                            "type": "string"
+                          },
+                          {
+                            "name": "sensor_status",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Groups",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "Groups_record",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "path_id",
+                    "type": "int"
+                  },
+                  {
+                    "name": "path_kind",
+                    "type": "int"
+                  },
+                  {
+                    "name": "start_time",
+                    "type": "string"
+                  },
+                  {
+                    "name": "scanning_density",
+                    "type": "int"
+                  },
+                  {
+                    "name": "Group_Cardinality",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "name": "Group_Cardinality_record",
+                        "type": "record",
+                        "fields": [
+                          {
+                            "name": "vehicle_id",
+                            "type": "string"
+                          },
+                          {
+                            "name": "speed",
+                            "type": "int"
+                          },
+                          {
+                            "name": "segments",
+                            "type": {
+                              "type": "array",
+                              "items": {
+                                "name": "segments_record",
+                                "type": "com.rbcar.avro.missiondescription.segments_record",
+                                "fields": [
+                                  {
+                                    "name": "path_segment_id",
+                                    "type": "int"
+                                  },
+                                  {
+                                    "name": "waypoint_kind",
+                                    "type": "int"
+                                  },
+                                  {
+                                    "name": "altitude",
+                                    "type": "int"
+                                  },
+                                  {
+                                    "name": "position",
+                                    "type": {
+                                      "name": "position",
+                                      "type": "com.rbcar.avro.missiondescription.position",
+                                      "fields": [
+                                        {
+                                          "name": "latitude",
+                                          "type": "float"
+                                        },
+                                        {
+                                          "name": "longitude",
+                                          "type": "float"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "name": "Sensors",
+                            "type": {
+                              "type": "array",
+                              "items": {
+                                "name": "Group_Sensors_record",
+                                "type": "record",
+                                "fields": [
+                                  {
+                                    "name": "sensor_type",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "name": "sensor_status",
+                                    "type": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Coverage",
+            "type": {
+              "name": "Coverage",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "coverage_start_time",
+                  "type": "string"
+                },
+                {
+                  "name": "Coverage_Cardinality",
+                  "type": "int"
+                },
+                {
+                  "name": "vehicle_names",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                },
+                {
+                  "name": "scanning_density",
+                  "type": "int"
+                },
+                {
+                  "name": "speed",
+                  "type": "int"
+                },
+                {
+                  "name": "altitude",
+                  "type": "float"
+                },
+                {
+                  "name": "polygon",
+                  "type": {
+                    "name": "polygon",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "vertices",
+                        "type": {
+                          "type": "array",
+                          "items": {
+                            "name": "vertices_record",
+                            "type": "record",
+                            "fields": [
+                              {
+                                "name": "latitude",
+                                "type": "float"
+                              },
+                              {
+                                "name": "longitude",
+                                "type": "float"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "Sensors",
+                  "type": {
+                    "type": "array",
+                    "items": {
+                      "name": "Coverage_Sensors_record",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "sensor_type",
+                          "type": "string"
+                        },
+                        {
+                          "name": "sensor_status",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

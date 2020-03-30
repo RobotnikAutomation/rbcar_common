@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbcar_description)/robots/rbcar.urdf.xacro'" />
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbcar_description)/robots/rbcar.urdf.xacro' "/>
+
   <param name="robot_description" command="$(arg urdf_file)" />
   <param name="/rbcar/robot_description" command="$(arg urdf_file)" /> <!-- hack so simulation works -->
 

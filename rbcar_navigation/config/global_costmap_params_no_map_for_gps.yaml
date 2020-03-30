@@ -1,30 +1,27 @@
 global_costmap:
   publish_voxel_map: true
   global_frame: world
-  robot_base_frame: base_footprint
+  robot_base_frame: base_link
   update_frequency: 5.0
   publish_frequency: 1.0
-  static_map: false
-  rolling_window: true
-  width:  40.0
-  height: 40.0
-  resolution: 0.2
-  origin_x: 0.0
-  origin_y: 0.0
+  static_map: true
+  rolling_window: false
+  width:  2000.0
+  height: 2000.0
+  resolution: 1.0
+  origin_x: -1000.0
+  origin_y: -1000.0
 
   plugins:
-   # - {name: obstacles_layer,        type: "costmap_2d::ObstacleLayer" }
-   # - {name: inflation_layer,        type: "costmap_2d::InflationLayer" }
-    - name: obstacles_layer
+    - name: obstacle_layer
       type: "costmap_2d::VoxelLayer"
     - name: inflation_layer
       type: "costmap_2d::InflationLayer"
-    #- {name: static, type: "costmap_2d::StaticLayer"}
 
   inflation_layer:
     enabled: false
     cost_scaling_factor: 1.0 # the lower, the more cost
     inflation_radius: 0.5 # big values make it harder to pass through narrow spaces
   
-  obstacles_layer:
+  obstacle_layer:
     enabled: false

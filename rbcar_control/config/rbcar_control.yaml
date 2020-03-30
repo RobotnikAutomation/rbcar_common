@@ -1,18 +1,46 @@
 robotnik_base_controller:
-  type: "ackermann_steering_controller/AckermannSteeringController"
-  rear_wheel: 'right_front_axle'
-  front_steer: 'right_steering_joint'
-  traction_wheel: ['right_front_axle', 'left_front_axle', 'right_rear_axle', 'left_rear_axle']
-  steer_wheel: ['right_steering_joint', 'left_steering_joint']
-  pose_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
-  twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
-  enable_odom_tf: true #false 
-  open_loop: false # is odometry open_loop?
-  base_frame_id: base_footprint
-  wheel_separation_h: 1.834
-  enable_odom_tf: true
+  type: ackermann_drive_controller/AckermannDriveController
+  traction:
+    front_right:
+      joint_name: right_front_axle
+      max_speed: 20.0 # rad/s
+    front_left:
+      joint_name: left_front_axle
+      max_speed: 20.0 # rad/s
+    back_right:
+      joint_name: right_rear_axle
+      max_speed: 20.0 # rad/s
+    back_left:
+      joint_name: left_rear_axle
+      max_speed: 20.0 # rad/s
+  steer:
+    front_right:
+      joint_name: right_steering_joint
+      min_angle: -0.7 # rads
+      max_angle: 0.7
+    front_left:
+      joint_name: left_steering_joint
+      min_angle: -0.7 # rads
+      max_angle: 0.7
+  linear_speed_limit: 10
+  linear_acceleration_limit: 1.0
+  angular_speed_limit: 2.0
+  angular_acceleration_limit: 2.0 
+  odom_frame: odom
+  robot_base_frame: base_footprint
+  odom_broadcast_tf: true
+  odom_topic: odom
+  command_topic: cmd_vel
+  applied_command_topic: applied_cmd_vel
+  wheel_base: 1.834
+  track_width: 0.80
+  wheel_diameter: 0.634 # 0.185... calibrated, 0.186 from cad
+  cmd_watchdog_duration: 0.2
+  odom_publish_frequency: 100
 
 joint_read_state_controller:
   type: joint_state_controller/JointStateController 
   publish_rate: 100.0
 
+joint_read_command_controller:
+  type: joint_read_command_controller/JointReadCommandController

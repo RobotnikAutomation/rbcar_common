@@ -1,6 +1,6 @@
 global_costmap:
-  global_frame: /map
-  robot_base_frame: /base_footprint
+  global_frame: map
+  robot_base_frame: base_link
   update_frequency: 5.0
   # robot radius +safety_delta 0.25 + 0.02
   # set to permit drawing a trajectory through the narrowest door

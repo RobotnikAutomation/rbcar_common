@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+
+  <rosparam command="load" file="$(find rbcar_localization)/launch/ekf_params.yaml" />
+  <rosparam command="load" file="$(find rbcar_localization)/launch/navsat_params_sim.yaml" />
+ 
+  <!--<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true"/>-->
+
+  <node pkg="robot_localization" type="ukf_localization_node" name="ekf_se_world" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_world"/>
+      <remap from="cmd_vel" to="/robotnik_base_controller/applied_cmd_vel" />
+  </node>
+
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true" output="screen" >
+      <remap from="odometry/filtered" to="odometry/filtered_world"/>
+      <!--<remap from="gps/fix" to="/navsat/fix"/>-->
+      <remap from="imu/data" to="/imu/data"/>
+  </node>
+
+</launch>

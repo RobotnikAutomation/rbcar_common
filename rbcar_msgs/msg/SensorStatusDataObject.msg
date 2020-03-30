@@ -1,0 +1,1 @@
+AvailableSensorsRecord[] SensorsTypes

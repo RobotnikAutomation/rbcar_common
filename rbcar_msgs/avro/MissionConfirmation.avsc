@@ -1,0 +1,32 @@
+{
+  "name": "MissionConfirmation",
+  "type": "record",
+  "namespace": "com.rbcar.avro.missionconfirmation",
+  "fields": [	
+    {
+      "name": "DataObject",
+      "type": {
+        "name": "DataObject",
+        "type": "record",
+        "fields": [
+          {
+            "name": "mission_id",
+            "type": "int"
+          },
+          {
+            "name": "confirmed",
+            "type": "boolean"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DataStructureType",
+      "type": "string"
+    },
+    {
+      "name": "SenderID",
+      "type": "string"
+    }
+  ]
+}

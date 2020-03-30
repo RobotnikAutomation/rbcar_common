@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="world2odom" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 world odom 100" />
+    <node name="utm2world" pkg="tf" type="static_transform_publisher" args="718204.91 4376231.74 0 0 0 0 utm world 100" />
+    <node name="utm2gps" pkg="gps_common" type="utm_odometry_node">
+    <remap from="fix" to="gps/fix" />
+    <remap from="odom" to="gps_odom" /> 
+    <param name="frame_id" value="utm " />
+    <param name="child_frame_id" value="base_gps" />
+    </node>
+</launch>
