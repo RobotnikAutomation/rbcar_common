@@ -63,14 +63,18 @@
 
 
   <!-- SENSORS -->
-  <xacro:sensor_benewake_ce30d prefix="front_3d_lidar" parent="base_link" gpu="true">
+  <!--xacro:sensor_benewake_ce30d prefix="front_3d_lidar" parent="base_link" gpu="true">
       <origin xyz="2.155 0.0 0.236" rpy="0 0.24396 0"/>
-  </xacro:sensor_benewake_ce30d>
+  </xacro:sensor_benewake_ce30d-->
 
   <xacro:sensor_rubedos_viper prefix="viper" parent="base_link">
       <origin xyz="1.289 0.0 1.354" rpy="0 0.1745 0.0"/>
   </xacro:sensor_rubedos_viper>
 
+  <xacro:sensor_sick_s300 prefix="front_laser" parent="base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
+      <origin xyz="2.2 0 0.3" rpy="0 0 0"/>
+  </xacro:sensor_sick_s300>
+  
   <xacro:sensor_imu_hector prefix="imu" parent="base_link">
     <origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
     <!--<origin xyz="0.917 0.0 0.170" rpy="0 0 0"/>-->
