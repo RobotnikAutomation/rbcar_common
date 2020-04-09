@@ -16,5 +16,5 @@ local_costmap:
       type: "costmap_2d::VoxelLayer"
 
   obstacle_layer:
-    enabled: false
+    enabled: true
 
