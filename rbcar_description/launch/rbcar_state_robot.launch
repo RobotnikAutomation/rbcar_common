@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbcar_description)/robots/rbcar.urdf.xacro' "/>
+  <!-- GPS default position of Robotnik at Fuente del Jarro-->
+  <arg name="gps_latitude" default="39.5080331"/>
+  <arg name="gps_longitude" default="-0.4619816"/>
+
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rbcar_description)/robots/rbcar.urdf.xacro' gps_latitude:='$(arg gps_latitude)' gps_longitude:='$(arg gps_longitude)'"/>
 
   <param name="robot_description" command="$(arg urdf_file)" />
   <param name="/rbcar/robot_description" command="$(arg urdf_file)" /> <!-- hack so simulation works -->
 
   <!-- Combine joint values -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
   
 </launch>
 

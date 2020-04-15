@@ -80,7 +80,7 @@
     <!--<origin xyz="0.917 0.0 0.170" rpy="0 0 0"/>-->
   </xacro:sensor_imu_hector>
 
-  <xacro:sensor_gps prefix="gps" parent="base_link">
+  <xacro:sensor_gps prefix="gps" parent="base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
     <origin xyz="0.0 0 1.5" rpy="0 0 0"/>
   </xacro:sensor_gps>
 
