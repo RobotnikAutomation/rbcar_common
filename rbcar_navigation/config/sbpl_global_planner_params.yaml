@@ -12,3 +12,4 @@ SBPLLatticePlanner:
   nominalvel_mpersecs: 1.0 # nominal linear velocity
   timetoturn45degsinplace_secs: 10 # time to turn 45 degrees in place.
   lethal_obstacle: 20 # to modify costs. not sure how it works
+  smooth_window: 20 # to smooth plan in case a small map resolution is used
