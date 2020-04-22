@@ -1,2 +1,0 @@
-int32 path_segment_id
-WayPoint WayPoint

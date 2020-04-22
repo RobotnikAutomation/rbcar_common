@@ -1,3 +1,0 @@
-string SenderID
-string DataStructureType
-AvailableAssetsDataObject DataObject

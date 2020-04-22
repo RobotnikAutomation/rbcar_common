@@ -1,7 +1,0 @@
-float32 elevation
-float32 speed_over_ground
-float64 longitude
-int32 track_id
-string radar_source
-float64 latitude
-float32 course_over_ground
