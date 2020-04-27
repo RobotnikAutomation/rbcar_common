@@ -40,7 +40,7 @@ odom1_queue_size: 10
 odom1_nodelay: true
 odom1_differential: false
 odom1_relative: false
-  #odom1_pose_rejection_threshold: 0.05
+# odom1_pose_rejection_threshold: 0.05
 # -------------------------------------
 # Laser scanmatching odometry:
 
