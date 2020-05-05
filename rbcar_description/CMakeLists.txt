@@ -16,6 +16,6 @@ include_directories(
 )
 
 install(
-  DIRECTORY launch
+  DIRECTORY launch meshes urdf robots
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
