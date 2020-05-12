@@ -24,6 +24,7 @@
   <xacro:property name="shock_z_offset" value="0.05"/>
 
   <!-- Degree-to-radian conversions -->
+  <xacro:property name="degrees_34" value="0.60822457"/> <!-- this is used as the limit of the steering of the wheels -->
   <xacro:property name="degrees_45" value="0.785398163"/>
   <xacro:property name="degrees_90" value="1.57079633"/>
   <xacro:property name="degrees_180" value="3.14159265"/>
@@ -233,8 +234,14 @@
       <parent link="${lr_prefix}_steering_link"/>
       <child link="${lr_prefix}_${fr_prefix}_axle_carrier"/>
       <axis xyz="0 0 1"/>
-      <limit lower="${-degrees_45}" upper="${degrees_45}"
+      <xacro:if value="${lr_reflect == 1}"> <!-- this applies if we are setting the left wheel -->
+        <limit lower="${-degrees_34}" upper="${degrees_45}"
              effort="${servo_stall_torque}" velocity="${servo_no_load_speed}"/>
+        </xacro:if>
+      <xacro:unless value="${lr_reflect == 1}"> <!-- this applies if we are setting the right wheel -->
+        <limit lower="${-degrees_45}" upper="${degrees_34}"
+             effort="${servo_stall_torque}" velocity="${servo_no_load_speed}"/>
+      </xacro:unless>
     </joint>
     <transmission name="${lr_prefix}_steering_trans">
       <type>transmission_interface/SimpleTransmission</type>
