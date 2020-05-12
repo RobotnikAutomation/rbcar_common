@@ -5,10 +5,10 @@
   <arg name="gps_latitude" default="39.5080331"/>
   <arg name="gps_longitude" default="-0.4619816"/>
 
-  <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find rbcar_description)/robots/rbcar.urdf.xacro' gps_latitude:='$(arg gps_latitude)' gps_longitude:='$(arg gps_longitude)'" />
-  <param name="robot_description" command="$(arg urdf_file)" />
-  <param name="/rbcar/robot_description" command="$(arg urdf_file)" /> <!-- hack so simulation works -->
-
+  <arg name="robot_xacro" default="$(optenv ROBOT_XACRO rbcar.urdf.xacro)"/>
+  <arg name="robot_xacro_path" default="$(find rbcar_description)/robots/$(arg robot_xacro)" />
+ 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg robot_xacro_path) gps_latitude:='$(arg gps_latitude)' gps_longitude:='$(arg gps_longitude)'" />
   <!-- Combine joint values -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
   
