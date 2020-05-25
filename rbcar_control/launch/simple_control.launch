@@ -2,15 +2,17 @@
 <launch>
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
-  <rosparam file="$(find rbcar_control)/config/simple_control.yaml" command="load"/>
+  <rosparam file="$(find rbcar_control)/config/rbcar_control.yaml" command="load"/>
 
   <!-- load the controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" args="
-					  rear_axle_controller
-					  joint_read_state_controller
-					  joint_read_command_controller
-                      "/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
+					  robotnik_base_controller
+            joint_read_state_controller
+            joint_read_command_controller
+            
+            "/>
+
+
   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
     <rosparam command="load" file="$(find rbcar_control)/config/twist_mux.yaml" />
     <remap from="cmd_vel_out" to="robotnik_base_controller/cmd_vel" />
