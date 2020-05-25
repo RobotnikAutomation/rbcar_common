@@ -4,7 +4,10 @@
   <version>1.0.5</version>
   <description>The rbcar_common package. It contains RBCAR common packages</description>
   
-  <maintainer email="jmnavarrete@robotnik.com">Juan Manuel Navarrete Carrascosa</maintainer>
+  <maintainer email="rnavarro@robotnik.es">Román Navarro</maintainer>
+  <maintainer email="rguzman@robotnik.es">Roberto Guzmán</maintainer>
+  <maintainer email="cvillar@robotnik.es">Carlos Villar</maintainer>
+  <maintainer email="jmnavarrete@robotnik.es">Juan Manuel Navarrete Carrascosa</maintainer>
 
   <license>BSD</license>
 

@@ -9,14 +9,14 @@
 					  robotnik_base_controller
             joint_read_state_controller
             joint_read_command_controller
-            joint_pan_position_controller
+            <!--joint_pan_position_controller
             joint_tilt_position_controller
-            elevator_controller
+            elevator_controller--!>
             "/>
-					  <!--left_front_shock_controller-->
-					  <!--right_front_shock_controller-->
-					  <!--left_rear_shock_controller-->
-					  <!--right_rear_shock_controller-->
+  <!--left_front_shock_controller-->
+  <!--right_front_shock_controller-->
+  <!--left_rear_shock_controller-->
+  <!--right_rear_shock_controller-->
 
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
