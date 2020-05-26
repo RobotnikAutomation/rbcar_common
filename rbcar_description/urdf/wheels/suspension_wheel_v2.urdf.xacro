@@ -95,7 +95,7 @@
       <xacro:if value="${fr_prefix=='rear'}">
         <xacro:property name="hex_hub_dist" value="1.2385"/>
       </xacro:if>
-      <origin xyz="${fr_reflect * wheelbase / 2 + 0.917}
+      <origin xyz="${fr_reflect * wheelbase / 2}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
                    ${(wheel_travel / 2) - shock_z_offset}"/>
 
@@ -170,13 +170,13 @@
         <xacro:if value="${lr_prefix=='left'}">
           <origin xyz="0
                        0
-                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "${degrees_90} 0 ${degrees_180}"/>
+                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy="0 0 0"/>
 
         </xacro:if>
         <xacro:if value="${lr_prefix=='right'}">
           <origin xyz="0
                        0
-                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "-${degrees_90} 0 ${degrees_180}"/>
+                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy="0 0 ${degrees_180}"/>
         </xacro:if>
         <geometry>
           <cylinder radius="${tire_dia / 2}" length="${tire_width}"/>
