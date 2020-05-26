@@ -4,7 +4,7 @@
  <arg name="joy_dev" default="/dev/input/js_base"/>
  <arg name="autorepeat_rate" default="0.0"/>
  <arg name="pad_model" default="ps4"/>
- <arg name="cmd_topic_vel" default="mux/pad_teleop/cmd_vel"/>
+ <arg name="cmd_topic_vel" default="pad_teleop/cmd_vel"/>
  <arg name="cmd_service_set_mode" default="rbcar/set_mode"/>
  <arg name="cmd_topic_ptz" default="front_ptz_camera/front_ptz_camera/ptz_command"/>
  <arg name="cmd_service_io" default="modbus_io/write_digital_output"/>
