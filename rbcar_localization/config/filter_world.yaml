@@ -9,14 +9,14 @@ print_diagnostics: true
 debug: false
 
 map_frame: world
-odom_frame: odom
-base_link_frame: base_footprint
+odom_frame: robot_odom
+base_link_frame: robot_base_footprint
 world_frame: world
 
 # -------------------------------------
 # Wheel odometry:
 
-odom0: /robotnik_base_controller/odom
+odom0: robotnik_base_controller/odom
 odom0_config: [false, false, false,
                false, false, false,
                true,  true,  false,
@@ -30,7 +30,7 @@ odom0_relative: false
 # -------------------------------------
 # GPS odometry:
 
-odom1: /odometry/gps
+odom1: odometry/gps
 odom1_config: [true,  true,  true,
                false, false, false,
                false, false, false,
@@ -58,7 +58,7 @@ odom1_relative: false
 # --------------------------------------
 # imu configure:
 
-imu0: /imu/data
+imu0: imu/data
 imu0_config: [false, false, false,
               true,  true, false,
               false, false, false,
