@@ -17,10 +17,10 @@ robotnik_base_controller:
     front_right:
       joint_name: robot_right_steering_joint
       min_angle: -0.7 # rads
-      max_angle: 0.7
+      max_angle: 0.6
     front_left:
       joint_name: robot_left_steering_joint
-      min_angle: -0.7 # rads
+      min_angle: -0.6 # rads
       max_angle: 0.7
   linear_speed_limit: 10
   linear_acceleration_limit: 1.0
