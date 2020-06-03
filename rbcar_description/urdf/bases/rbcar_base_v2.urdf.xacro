@@ -47,15 +47,15 @@
         <inertia ixx="1.391" ixy="0.004" ixz="0.0" iyy="6.853" iyz="0.0" izz="6.125" />
       </inertial>
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.175" rpy="0 0 0" />
         <xacro:if value="${hq}">
           <geometry>
-            <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.STL"/>
+            <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.stl"/>
           </geometry>
         </xacro:if>
         <xacro:unless value="${hq}">
           <geometry>
-            <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.STL"/>
+            <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.stl"/>
           </geometry>
         </xacro:unless>
         <material name="white">
@@ -65,7 +65,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0 " />
         <geometry>
-          <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.STL"/>
+          <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.stl"/>
         </geometry>
       </collision>
     </link>
