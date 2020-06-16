@@ -69,6 +69,10 @@
       <origin xyz="2.155 0.0 0.236" rpy="0 0.24396 0"/>
   </xacro:sensor_benewake_ce30d-->
 
+  <xacro:sensor_velodyne_vlp16 prefix="front_3d_lidar" parent="base_link" range_min="0.8" range_max="31.0" gpu="false">
+      <origin xyz="2.155 0.0 0.236" rpy="0 0.24396 0"/>
+  </xacro:sensor_velodyne_vlp16>
+
   <xacro:sensor_rubedos_viper prefix="viper" parent="base_link">
     <origin xyz="1.289 0.0 1.354" rpy="0 0.1745 0.0"/>
   </xacro:sensor_rubedos_viper>
@@ -78,9 +82,9 @@
 		<!--<origin xyz="0.917 0.0 0.170" rpy="0 0 0"/>-->
 	</xacro:sensor_imu_hector>
 
-  <xacro:sensor_sick_s300 prefix="front_laser" parent="base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
+  <!--xacro:sensor_sick_s300 prefix="front_laser" parent="base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
     <origin xyz="2.2 0 0.3" rpy="0 0 0"/>
-  </xacro:sensor_sick_s300>
+  </xacro:sensor_sick_s300-->
 
 	<xacro:sensor_gps prefix="gps" parent="base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
 		<origin xyz="0.0 0 1.5" rpy="0 0 0"/>
