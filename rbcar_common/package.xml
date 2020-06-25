@@ -17,7 +17,6 @@
   <buildtool_depend>catkin</buildtool_depend>
   
   <run_depend>rbcar_description</run_depend>
-  <run_depend>rbcar_pad</run_depend>
 
   <export><metapackage/></export>
 

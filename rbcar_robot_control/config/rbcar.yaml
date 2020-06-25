@@ -1,5 +1,0 @@
-rbcar_robot_control:
-
-     model: rbcar
-
-     publish_odom_tf: true
