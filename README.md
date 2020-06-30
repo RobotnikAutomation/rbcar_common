@@ -9,3 +9,5 @@ This package allows controlling the robot using a joystick or game-pad, by sendi
 
 # Install the following dependencies
 Ackermann drive controller: included in the directory rbcar_common/rbcar_control/lib/
+Robotnik msgs: included in the directory rbcar_common/rbcar_control/lib/
+
