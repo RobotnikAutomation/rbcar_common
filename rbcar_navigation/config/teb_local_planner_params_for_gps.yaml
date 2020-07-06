@@ -1,8 +1,8 @@
 base_local_planner: teb_local_planner/TebLocalPlannerROS
 
 TebLocalPlannerROS:
-  odom_topic: odom
-  map_frame: odom
+  odom_topic: robot_odom
+  map_frame: robot_odom
 
   # Trajectory
   teb_autosize: True
@@ -17,11 +17,11 @@ TebLocalPlannerROS:
   # Robot
   max_vel_x: 6
   max_vel_x_backwards: 0.2
-  max_vel_theta: 0.75
+  max_vel_theta: 0.5
   acc_lim_x: 0.5
-  acc_lim_theta: 0.5
-  min_turning_radius: 2.7 # actual turning radius is approx 2.68, but it is better to set it higher. higher means more restrictive movement
-  wheelbase: 1.8 # only used if publishing an ackermann
+  acc_lim_theta: 0.1
+  min_turning_radius: 3.5 # actual turning radius is approx 2.68, but it is better to set it higher. higher means more restrictive movement
+  wheelbase: 1.63 # only used if publishing an ackermann
   cmd_angle_instead_rotvel: false #true
   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
     type: "line"
