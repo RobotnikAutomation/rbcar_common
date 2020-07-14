@@ -35,6 +35,8 @@
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
 
+	<xacro:property name="wheelbase" value="1.63" />
+
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
@@ -43,7 +45,7 @@
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 
 	<!-- Rbcar base -->
-	<xacro:rbcar_base name="rbcar" publish_bf="true" hq="${hq}" prefix="${robot_prefix}"/>
+	<xacro:rbcar_base name="rbcar" publish_bf="true" hq="${hq}" prefix="${robot_prefix}" wheelbase="${wheelbase}"/>
 
 	<!-- Gazebo ros control pluggins -->
 	<xacro:ros_control/>
