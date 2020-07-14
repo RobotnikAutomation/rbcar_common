@@ -96,7 +96,7 @@
       <xacro:if value="${fr_prefix=='rear'}">
         <xacro:property name="hex_hub_dist" value="1.2385"/>
       </xacro:if>
-      <origin xyz="${fr_reflect * wheelbase / 2}
+      <origin xyz="${fr_reflect * wheelbase / 2 + wheelbase/2}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
                    ${(wheel_travel / 2) - shock_z_offset}"/>
 
