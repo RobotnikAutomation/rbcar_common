@@ -5,7 +5,7 @@
 
   <xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.gazebo.xacro" />
 
-  <xacro:macro name="rbcar_base" params="name publish_bf hq prefix:=^''">
+  <xacro:macro name="rbcar_base" params="name publish_bf hq prefix:=^'' wheelbase:=^'1.63'">
 
     <!-- Robot mechanical and motor parameters -->
     <xacro:property name="PI" value="3.1415926535897931"/>
@@ -43,11 +43,11 @@
     <link name="${prefix}base_link">
       <inertial>
         <mass value="125.0" />
-        <origin xyz="0 0 0" />
+        <origin xyz="${wheelbase/2.0} 0 0" />
         <inertia ixx="1.391" ixy="0.004" ixz="0.0" iyy="6.853" iyz="0.0" izz="6.125" />
       </inertial>
       <visual>
-        <origin xyz="0 0 0.175" rpy="0 0 0" />
+        <origin xyz="${wheelbase/2.0} 0 0.175" rpy="0 0 0" />
         <xacro:if value="${hq}">
           <geometry>
             <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.stl"/>
@@ -63,7 +63,7 @@
         </material>
       </visual>
       <collision>
-        <origin xyz="0 0 0.175" rpy="0 0 0 " />
+        <origin xyz="${wheelbase/2.0} 0 0.175" rpy="0 0 0 " />
         <geometry>
           <mesh filename="package://rbcar_description/meshes/bases/rbcar_chassis_v2.stl"/>
         </geometry>
