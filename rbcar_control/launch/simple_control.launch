@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="remap_mux_output_topic" default="robotnik_base_controller/cmd_vel"/>
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find rbcar_control)/config/rbcar_control.yaml" command="load"/>
@@ -15,7 +16,7 @@
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
     <rosparam command="load" file="$(find rbcar_control)/config/twist_mux.yaml" />
-    <remap from="cmd_vel_out" to="robotnik_base_controller/cmd_vel" />
+    <remap from="cmd_vel_out" to="$(arg remap_mux_output_topic)" />
   </node>
 
 </launch>
