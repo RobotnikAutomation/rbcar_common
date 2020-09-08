@@ -28,7 +28,7 @@ robotnik_base_controller:
   angular_acceleration_limit: 2.0 
   odom_frame: robot_odom
   robot_base_frame: robot_base_footprint
-  odom_broadcast_tf: false
+  odom_broadcast_tf: true
   odom_topic: odom
   command_topic: cmd_vel
   applied_command_topic: applied_cmd_vel
