@@ -1,4 +1,4 @@
-robotnik_base_controller:
+robotnik_base_control:
   type: ackermann_drive_controller/AckermannDriveController
   traction:
     front_right:
@@ -28,7 +28,7 @@ robotnik_base_controller:
   angular_acceleration_limit: 2.0 
   odom_frame: odom
   robot_base_frame: base_footprint
-  odom_broadcast_tf: false
+  odom_broadcast_tf: true
   odom_topic: odom
   command_topic: cmd_vel
   applied_command_topic: applied_cmd_vel
@@ -37,6 +37,7 @@ robotnik_base_controller:
   wheel_diameter: 0.634 # 0.185... calibrated, 0.186 from cad
   cmd_watchdog_duration: 0.2
   odom_publish_frequency: 100
+  use_angular_velocity_as_steering_angle: true
 
 joint_read_state_controller:
   type: joint_state_controller/JointStateController 
