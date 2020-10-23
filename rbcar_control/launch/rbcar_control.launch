@@ -6,7 +6,7 @@
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
-					  robotnik_base_controller
+					  robotnik_base_control
             joint_read_state_controller
             joint_read_command_controller
             joint_pan_position_controller
@@ -21,7 +21,7 @@
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
     <rosparam command="load" file="$(find rbcar_control)/config/twist_mux.yaml" />
-    <remap from="cmd_vel_out" to="robotnik_base_controller/cmd_vel" />
+    <remap from="cmd_vel_out" to="robotnik_base_control/cmd_vel" />
   </node>
 
 
