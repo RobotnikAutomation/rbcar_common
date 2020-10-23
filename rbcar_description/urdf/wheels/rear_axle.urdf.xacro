@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot name="rear_axle" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="rear_axle" params="prefix parent *origin">
+
+    <joint name="${prefix}_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${prefix}"/>
+      <xacro:insert_block name="origin" />
+      <!--origin xyz="-0.91131 0 0" rpy="1.57079633 0 3.14159265"/-->
+      <axis xyz="0 0 1"/>
+      <limit effort="600" velocity="1000"/>
+    </joint>
+
+    <transmission name="${prefix}_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}_actuator">
+        <!-- This hardwareInterface element exists for compatibility
+              with ROS Hydro. -->
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <link name="${prefix}">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.2" radius="0.317"/>
+        </geometry>
+        <material name="tire_mat"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.2" radius="0.317"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="8.0"/>
+        <inertia ixx="0.164729166667" ixy="0" ixz="0" iyy="0.164729166667" iyz="0" izz="0.276125"/>
+      </inertial>
+    </link>
+
+  </xacro:macro>
+
+ </robot>
