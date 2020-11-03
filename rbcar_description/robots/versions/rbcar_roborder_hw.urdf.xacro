@@ -76,9 +76,9 @@
 		<origin xyz="-0.58166 0.0 0.6" rpy="0 0 0"/>
 	</xacro:elevator>
 
-  <xacro:sensor_axis prefix="front_ptz_camera" parent="elevator_link" far="300" near="0.08">
+  <xacro:sensor_axis_q8641 prefix="front_ptz_camera" parent="elevator_link" far="300" near="0.08">
     <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:sensor_axis>
+  </xacro:sensor_axis_q8641>
 
 <gazebo>
 <plugin name="ground_truth_controller" filename="librobotnik_gazebo_ground_truth_odom.so">
