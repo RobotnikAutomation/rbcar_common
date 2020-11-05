@@ -16,7 +16,7 @@
 
 		<!--<rosparam file="$(find rbcar_navigation)/config/rsband_local_planner_params.yaml" command="load" />-->
 		<rosparam file="$(find rbcar_navigation)/config/sbpl_global_planner_params.yaml" command="load" />
-		<param name="SBPLLatticePlanner/primitive_filename" value="$(find roborder_navigation)/config/primitives/$(arg primitive_filename)" />
+		<param name="SBPLLatticePlanner/primitive_filename" value="$(find rbcar_navigation)/config/primitives/$(arg primitive_filename)" />
 		
 		<!-- navfn/NavfnROS -->
 		<rosparam file="$(find rbcar_navigation)/config/teb_local_planner_params_for_gps.yaml" command="load" />
