@@ -1,0 +1,7 @@
+robot_frame: base_footprint
+map_frame: map
+global_frame: map
+
+tf_timeout: 1.5
+planner_max_retries: 3
+

@@ -1,0 +1,4 @@
+planners:
+  - name: 'SBPLLatticePlanner'
+    type: 'SBPLLatticePlanner'
+

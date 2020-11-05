@@ -1,0 +1,13 @@
+info for file parking.mprim
+wheelbase: 1.830000
+spatial_resolution (resolution_m): 0.200000
+numberofangles: 64.000000
+angular_resolution: 0.098175
+path_resolution: 0.100000
+simulation_time: 1.000000
+simulation_step: 0.010000
+simulation_size: 101
+straight speed: 0.500000 -0.500000
+straight steering: 0.000000 0.000000
+turn speed: 0.500000
+turn steering: 0.050000 0.100000 0.150000 0.200000 0.250000 0.300000 0.350000 0.400000 0.450000 -0.050000 -0.100000 -0.150000 -0.200000 -0.250000 -0.300000 -0.350000 -0.400000 -0.450000

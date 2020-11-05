@@ -13,3 +13,4 @@ SBPLLatticePlanner:
   timetoturn45degsinplace_secs: 10 # time to turn 45 degrees in place.
   lethal_obstacle: 20 # to modify costs. not sure how it works
   smooth_window: 20 # to smooth plan in case a small map resolution is used
+  numberofangles: 64 # 

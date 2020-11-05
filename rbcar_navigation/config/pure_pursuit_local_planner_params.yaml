@@ -1,0 +1,13 @@
+base_local_planner: pure_pursuit_local_planner/PurePursuitPlanner
+
+PurePursuitPlanner:
+
+  # Trajectory
+  maximum_speed: 2.4
+  minimum_speed: 2.0
+  maximum_look_ahead: 10.0
+  minimum_look_ahead: 5.0
+
+  # GoalTolerance
+  xy_goal_tolerance: 0.4
+  yaw_goal_tolerance: 0.5
