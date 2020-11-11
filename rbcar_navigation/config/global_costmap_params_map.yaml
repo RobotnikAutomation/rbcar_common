@@ -16,10 +16,10 @@ global_costmap:
 #
 #  static_layer:
 #    enabled: false  
-  plugins:
-    - name: obstacle_layer
-      type: "costmap_2d::VoxelLayer"
+#  plugins:
+#    - name: obstacle_layer
+#      type: "costmap_2d::VoxelLayer"
 
-  obstacle_layer:
-    enabled: true
+#  obstacle_layer:
+#    enabled: true
 
