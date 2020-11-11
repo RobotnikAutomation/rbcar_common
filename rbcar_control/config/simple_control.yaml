@@ -13,27 +13,19 @@
 rear_axle_controller:
   type: traction_controller/TractionController
   joint: rear_axle_joint
+  wheel_diameter: 0.65
   pid:
-    p: 2
-    i: 2
-    d: 0.002
-    i_clamp_min: -200
-    i_clamp_max: -200
-    antiwindup: true
-    publish_state: true
+    Kp: 418 # works in mps, use 2 to work in rpm 
+    Ki: 418 # 418.26 # works in mps, use 2 to work in rpm
+    Kd: 0.418 #0.41826 # works in mps, use 0.002 to work in rpm
+    WindupLimit: 0.5
+    IntegratorDecay: 0.1
+    IntegratorDecayWindow: 0.1
   cmd_watchdog_duration: 1
-  linear_speed_limit: 1000
-  linear_acceleration_limit: 100
-  linear_deceleration_limit: 100
-
-robotnik_base_hw:
-    Kp: 2.0
-    Ki: 2.0
-    Kd: 0.002
-    upper_limit: 3000
-    lower_limit: -3000
-    windup_limit: 200
-    cutoff_frequency: 20
+  limits:
+    linear_speed_limit: 0.5
+    linear_acceleration_limit: 1
+    linear_deceleration_limit: 1
 
 joint_read_state_controller:
   type: joint_state_controller/JointStateController 
