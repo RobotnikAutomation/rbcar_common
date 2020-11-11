@@ -9,7 +9,7 @@
 	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
 	<!-- Import Robotnik CAR base elements -->
-	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
+	<xacro:include filename="$(find rbcar_description)/urdf/bases/roborder_base.urdf.xacro" />
 
 	<!-- Import Robotnik CAR wheels -->
 	<!--xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" /-->
@@ -60,8 +60,12 @@
       <origin xyz="1.23298 0.0 0.2425" rpy="0 0 0"/>
   </xacro:sensor_benewake_ce30d>
 
+  <xacro:sensor_ouster1_16 prefix="top_3d_lidar" parent="base_link" hsamples="1024" fps="10" gpu="true">
+      <origin xyz="0.6 0.0 1.6993" rpy="0 0.1745 0"/>
+  </xacro:sensor_ouster1_16>
+
   <xacro:sensor_rubedos_viper prefix="viper" parent="base_link">
-      <origin xyz="1.289 0.0 1.354" rpy="0 0.1745 0.0"/>
+      <origin xyz="0.6 0.0 1.354" rpy="0 0.1745 0.0"/>
   </xacro:sensor_rubedos_viper>
 
 	<xacro:sensor_imu_hector prefix="imu" parent="base_link">

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+
+  <!-- ros control plugin -->
+  <xacro:macro name="ros_control">
+    <gazebo>
+      <plugin name="ros_control" filename="libgazebo_ros_control.so">
+        <controlPeriod>0.001</controlPeriod>
+	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+	    <legacyModeNS>false</legacyModeNS>
+      </plugin>
+    </gazebo>
+	</xacro:macro>
+
+  <!-- No Ackermann steering plugin -->
+<xacro:macro name="omni_steering" params="prefix publish_tf">
+		<gazebo>
+	    <plugin name="omni_steering" filename="libgazebo_ros_planar_move.so">
+	      <commandTopic>robotnik_base_controller/cmd_vel</commandTopic>
+	      <odometryTopic>robotnik_base_controller/odom</odometryTopic>
+	      <odometryFrame>${prefix}odom</odometryFrame>
+	      <odometryRate>50.0</odometryRate>
+	      <robotBaseFrame>${prefix}base_footprint</robotBaseFrame>
+	      <publishTF>${publish_tf}</publishTF>
+	    </plugin>
+	  </gazebo>
+  </xacro:macro>
+
+
+  <gazebo reference="base_footprint">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+
+</robot>
