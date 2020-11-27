@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
+  <arg name="prefix" default="$(arg id_robot)_"/>
+
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find rbcar_control)/config/simple_control.yaml" command="load"/>
