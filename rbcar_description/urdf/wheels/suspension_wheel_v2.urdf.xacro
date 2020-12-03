@@ -17,7 +17,7 @@
        the shock absorbers are fully extended. axle_length is the distance
        from a U joint to the corresponding hex hub. wheel_travel is the
        vertical wheel travel. -->
-  <xacro:property name="wheelbase" value="1.83323"/>
+  <xacro:property name="wheelbase" value="1.86"/>
   <!--xacro:property name="hex_hub_dist" value="1.2385"/-->  <!-- 1.127 0.742 0.900 check -->
   <xacro:property name="axle_length" value="0.120"/>
   <xacro:property name="wheel_travel" value="0.1"/>
@@ -141,7 +141,7 @@
     <joint name="${lr_prefix}_${fr_prefix}_axle" type="continuous">
       <parent link="${lr_prefix}_${fr_prefix}_axle_carrier"/>
       <child link="${lr_prefix}_${fr_prefix}_wheel"/>
-      <origin rpy="${degrees_90} 0 ${degrees_180}"/>
+      <origin rpy="-${degrees_90} 0 0"/>
       <axis xyz="0 0 1"/>
       <limit effort="${axle_eff_limit}" velocity="${axle_vel_limit}"/>
       <joint_properties damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
@@ -166,18 +166,11 @@
 
     <link name="${lr_prefix}_${fr_prefix}_wheel">
       <visual>
-
-        <xacro:if value="${lr_prefix=='left'}">
           <origin xyz="0
                        0
-                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "${degrees_90} 0 ${degrees_180}"/>
+                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "${lr_reflect * degrees_90} 0 ${degrees_180}"/>
 
-        </xacro:if>
-        <xacro:if value="${lr_prefix=='right'}">
-          <origin xyz="0
-                       0
-                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "-${degrees_90} 0 ${degrees_180}"/>
-        </xacro:if>
+
         <geometry>
           <!--cylinder radius="${tire_dia / 2}" length="${tire_width}"/-->
           <mesh filename="package://rbcar_description/meshes/wheels/rbcar_wheel.stl"/>
@@ -266,7 +259,7 @@
   <xacro:macro name="rear_wheel"
                params="lr_prefix fr_prefix lr_reflect fr_reflect parent">
     <xacro:shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
-                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}" 
+                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
                  child="${lr_prefix}_${fr_prefix}_axle_carrier" parent="${parent}"/>
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>

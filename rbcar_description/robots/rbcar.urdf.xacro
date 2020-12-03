@@ -13,8 +13,6 @@
 
 	<!-- Import Robotnik CAR wheels -->
 	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" />
-	
-	<xacro:include filename="$(find rbcar_description)/urdf/structures/elevator.urdf.xacro" />
 
 	<!-- Import all available sensors -->
 	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
@@ -32,7 +30,9 @@
 
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
-
+	<xacro:arg name="prefix" default="robot_"/>
+	<xacro:arg name="gps_longitude" default="39.5091874"/>
+	<xacro:arg name="gps_latitude" default="-0.4637371"/>
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
@@ -41,62 +41,39 @@
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 
 	<!-- Summit XL base -->
-	<xacro:rbcar_base name="rbcar" publish_bf="true" hq="${hq}" />
+	<xacro:rbcar_base name="rbcar" prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
 
 	<!-- Gazebo ros control pluggins -->
 	<xacro:ros_control/>
 
-        <!-- xacro:omni_steering prefix="" publish_tf="true"/-->
-
-	<!-- Gazebo skid steering pluggins -->
-	<!-- xacro:skid_steering broadcastOdomTF="1"/ -->
-
-	<!-- WHEELS -->
-
-    <!-- Wheels -->
-    <xacro:front_wheel lr_prefix="left" fr_prefix="front"
-                       lr_reflect="1" fr_reflect="1" parent="base_link" />
-    <xacro:front_wheel lr_prefix="right" fr_prefix="front"
-                       lr_reflect="-1" fr_reflect="1" parent="base_link" />
-    <xacro:rear_wheel lr_prefix="left" fr_prefix="rear"
-                      lr_reflect="1" fr_reflect="-1" parent="base_link" />
-    <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
-                      lr_reflect="-1" fr_reflect="-1" parent="base_link" />
+	<!-- Wheels -->
+	<xacro:front_wheel lr_prefix="$(arg prefix)left" fr_prefix="front"
+					 lr_reflect="1" fr_reflect="1" parent="$(arg prefix)base_link" />
+	<xacro:front_wheel lr_prefix="$(arg prefix)right" fr_prefix="front"
+					 lr_reflect="-1" fr_reflect="1" parent="$(arg prefix)base_link" />
+	<xacro:rear_wheel lr_prefix="$(arg prefix)left" fr_prefix="rear"
+					lr_reflect="1" fr_reflect="-1" parent="$(arg prefix)base_link" />
+	<xacro:rear_wheel lr_prefix="$(arg prefix)right" fr_prefix="rear"
+					lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />
 
 
-	<!-- SENSORS -->
-  <!--xacro:sensor_benewake_ce30d prefix="front_3d_lidar" parent="base_link" gpu="true">
-      <origin xyz="2.155 0.0 0.236" rpy="0 0.24396 0"/>
-  </xacro:sensor_benewake_ce30d-->
+	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link">
+	  <origin xyz="1.0 0.0 1.5" rpy="0 0.24396 0"/>
+	</xacro:sensor_rslidar_16>
 
-  <xacro:sensor_velodyne_vlp16 prefix="front_3d_lidar" parent="base_link" range_min="0.8" range_max="31.0" gpu="false">
-      <origin xyz="2.155 0.0 0.236" rpy="0 0.24396 0"/>
-  </xacro:sensor_velodyne_vlp16>
 
-  <xacro:sensor_rubedos_viper prefix="viper" parent="base_link">
-    <origin xyz="1.289 0.0 1.354" rpy="0 0.1745 0.0"/>
-  </xacro:sensor_rubedos_viper>
-
-	<xacro:sensor_imu_hector prefix="imu" parent="base_link">
+	<xacro:sensor_imu_hector prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
 		<origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
 		<!--<origin xyz="0.917 0.0 0.170" rpy="0 0 0"/>-->
 	</xacro:sensor_imu_hector>
 
-  <!--xacro:sensor_sick_s300 prefix="front_laser" parent="base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
-    <origin xyz="2.2 0 0.3" rpy="0 0 0"/>
-  </xacro:sensor_sick_s300-->
+	<xacro:sensor_sick_outdoorscan3 prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
+		<origin xyz="2.2 0 0.3" rpy="0 0 0"/>
+	</xacro:sensor_sick_outdoorscan3>
 
-	<xacro:sensor_gps prefix="gps" parent="base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
+	<xacro:sensor_gps prefix="$(arg prefix)gps" parent="$(arg prefix)base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
 		<origin xyz="0.0 0 1.5" rpy="0 0 0"/>
-		<!--<origin xyz="0.747 0 1.5" rpy="0 0 0"/>-->
 	</xacro:sensor_gps>
 
-  <xacro:elevator parent="base_link">
-		<origin xyz="0.0 0.0 0.6" rpy="0 0 0"/>
-	</xacro:elevator>
-
-  <xacro:sensor_axis prefix="front_ptz_camera" parent="elevator_link">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:sensor_axis>
 
 </robot>
