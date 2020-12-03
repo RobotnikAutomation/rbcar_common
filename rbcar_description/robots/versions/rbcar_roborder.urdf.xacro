@@ -12,7 +12,7 @@
 	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
 
 	<!-- Import Robotnik CAR wheels -->
-	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" />
+	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v3.urdf.xacro" />
 	
 	<xacro:include filename="$(find rbcar_description)/urdf/structures/elevator.urdf.xacro" />
 
@@ -27,13 +27,12 @@
 	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<!-- Wheel parameters -->
-	<xacro:property name="wheel_offset_x" value="1.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
-	<xacro:property name="wheel_offset_y" value="0.75" />
+	<xacro:property name="wheel_offset_x" value="0.91131" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
+	<xacro:property name="wheel_offset_y" value="0.62124" />
 	<xacro:property name="wheel_offset_z" value="0.0" />
 
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
-
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
@@ -62,8 +61,7 @@
   <xacro:rear_wheel lr_prefix="left" fr_prefix="rear"
                     lr_reflect="1" fr_reflect="-1" parent="base_link" />
   <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
-                    lr_reflect="-1" fr_reflect="-1" parent="base_link" />
-            
+                    lr_reflect="-1" fr_reflect="-1" parent="base_link" />   
 
 	<!-- SENSORS -->
   <xacro:sensor_benewake_ce30d prefix="front_3d_lidar" parent="base_link" gpu="true">
