@@ -4,7 +4,7 @@
 
   <xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.gazebo.xacro" />
 
-  <xacro:macro name="rbcar_base" params="prefix name publish_bf hq">
+  <xacro:macro name="rbcar_base" params="prefix:='' name publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
