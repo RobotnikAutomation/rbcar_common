@@ -4,10 +4,9 @@
   <xacro:macro name="rear_axle" params="prefix parent *origin">
 
     <joint name="${prefix}_joint" type="continuous">
-      <parent link="base_link"/>
+      <parent link="${parent}"/>
       <child link="${prefix}"/>
       <xacro:insert_block name="origin" />
-      <!--origin xyz="-0.91131 0 0" rpy="1.57079633 0 3.14159265"/-->
       <axis xyz="0 0 1"/>
       <limit effort="600" velocity="1000"/>
     </joint>

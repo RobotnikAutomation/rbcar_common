@@ -13,6 +13,7 @@
 
 	<!-- Import Robotnik CAR wheels -->
 	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" />
+	<xacro:include filename="$(find rbcar_description)/urdf/wheels/rear_axle.urdf.xacro" />
 
 	<!-- Import all available sensors -->
 	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
@@ -55,7 +56,10 @@
 					lr_reflect="1" fr_reflect="-1" parent="$(arg prefix)base_link" />
 	<xacro:rear_wheel lr_prefix="$(arg prefix)right" fr_prefix="rear"
 					lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />
-
+  
+    <xacro:rear_axle prefix="$(arg prefix)rear_axle" parent="$(arg prefix)base_link">
+	  <origin xyz="0 0.0 0" rpy="1.57079633 0 3.14159265"/>
+    </xacro:rear_axle>
 
 	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link">
 	  <origin xyz="1.163 0.0 1.602" rpy="0 0.2637 0"/>
