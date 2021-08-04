@@ -8,15 +8,14 @@ transform_timeout: 0.0
 print_diagnostics: true
 debug: false
 
-map_frame: world
-odom_frame: odom
-base_link_frame: base_footprint
-world_frame: world
-
+map_frame: $(arg map_frame)
+odom_frame: $(arg odom_frame)
+base_link_frame: $(arg base_frame)
+world_frame: $(arg world_frame)
 # -------------------------------------
 # Wheel odometry:
 
-odom0: /robotnik_base_control/odom
+odom0: robotnik_base_control/odom
 odom0_config: [false, false, false,
                false, false, false,
                true,  true,  false,
@@ -30,7 +29,7 @@ odom0_relative: false
 # -------------------------------------
 # GPS odometry:
 
-odom1: /odometry/gps
+odom1: odometry/gps
 odom1_config: [true,  true,  true,
                false, false, false,
                false, false, false,
@@ -58,7 +57,7 @@ odom1_relative: false
 # --------------------------------------
 # imu configure:
 
-imu0: /imu/data
+imu0: imu/data
 imu0_config: [false, false, false,
               true,  true, false,
               false, false, false,
@@ -118,4 +117,3 @@ initial_estimate_covariance: [1.0,  0,    0,    0,    0,    0,    0,    0,    0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1.0,  0,    0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1.0,  0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1.0]
-

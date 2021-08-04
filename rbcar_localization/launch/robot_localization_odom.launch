@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
-<launch>  
+<launch>
+
+	<arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
+  <arg name="prefix" default="$(arg id_robot)_" />
 	
-	<arg name="prefix" default=""/>
+	<arg name="base_frame" default="$(arg prefix)base_footprint"/>
+	<arg name="odom_frame" default="$(arg prefix)odom"/>
+	<arg name="world_frame" default="$(arg odom_frame)"/>
+	<arg name="map_frame" default="world"/>
 
     <node pkg="robot_localization" type="ekf_localization_node" name="filter_odom" clear_params="true" output="screen">
-        <rosparam command="load" file="$(find rbcar_localization)/config/filter_odom.yaml" />
+        <rosparam command="load" file="$(find rbcar_localization)/config/filter_odom.yaml" subst_value="true"  />
         <remap from="odometry/filtered" to="odometry/filtered"/>
     </node>
 

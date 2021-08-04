@@ -9,15 +9,15 @@ transform_timeout: 0.0
 print_diagnostics: true
 debug: false
 
-map_frame: world
-odom_frame: odom
-base_link_frame: base_footprint
-world_frame: odom
+map_frame: $(arg map_frame)
+odom_frame: $(arg odom_frame)
+base_link_frame: $(arg base_frame)
+world_frame: $(arg world_frame)
 
 # -------------------------------------
 # Wheel odometry:
 
-odom0: /robotnik_base_control/odom
+odom0: robotnik_base_control/odom
 odom0_config: [false, false, false,
                false, false, false,
                true,  true,  true,
@@ -45,7 +45,7 @@ odom0_relative: false
 # --------------------------------------
 # imu configure:
 
-imu0: /imu/data
+imu0: imu/data
 imu0_config: [false, false, false,
               true,  true,  false,
               false, false, false,
