@@ -171,13 +171,13 @@
     <link name="${lr_prefix}_${fr_prefix}_wheel">
       <visual>
 
-        <xacro:if value="${lr_prefix=='left'}">
+        <xacro:if value="${lr_prefix.endswith('left')}">
           <origin xyz="0
                        0
                        ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "${degrees_90} 0 ${degrees_180}"/>
 
         </xacro:if>
-        <xacro:if value="${lr_prefix=='right'}">
+        <xacro:if value="${lr_prefix.endswith('right')}">
           <origin xyz="0
                        0
                        ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "-${degrees_90} 0 ${degrees_180}"/>
@@ -270,7 +270,7 @@
   <xacro:macro name="rear_wheel"
                params="lr_prefix fr_prefix lr_reflect fr_reflect parent">
     <xacro:shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
-                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}" 
+                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
                  child="${lr_prefix}_${fr_prefix}_axle_carrier" parent="${parent}"/>
     <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>

@@ -12,7 +12,7 @@
 	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
 
 	<!-- Import Robotnik CAR wheels -->
-	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" />
+	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v3.urdf.xacro" />
 	<xacro:include filename="$(find rbcar_description)/urdf/wheels/rear_axle.urdf.xacro" />
 
 	<!-- Import all available sensors -->
@@ -56,10 +56,11 @@
 					lr_reflect="1" fr_reflect="-1" parent="$(arg prefix)base_link" />
 	<xacro:rear_wheel lr_prefix="$(arg prefix)right" fr_prefix="rear"
 					lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />
-  
-    <xacro:rear_axle prefix="$(arg prefix)rear_axle" parent="$(arg prefix)base_link">
-	  <origin xyz="0 0.0 0" rpy="1.57079633 0 3.14159265"/>
-    </xacro:rear_axle>
+
+  <xacro:rear_axle prefix="$(arg prefix)rear_axle" parent="$(arg prefix)base_link">
+    <origin xyz="0 0.0 0" rpy="1.57079633 0 3.14159265"/>
+  </xacro:rear_axle>
+
 
 	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link">
 	  <origin xyz="1.163 0.0 1.602" rpy="0 0.2637 0"/>
@@ -71,12 +72,11 @@
 	</xacro:sensor_imu_hector>
 
 	<xacro:sensor_sick_outdoorscan3 prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
-		<origin xyz="2.101 0 0.206" rpy="0 0 0"/>
+		<origin xyz="2.350 0 0.206" rpy="0 0 0"/>
 	</xacro:sensor_sick_outdoorscan3>
 
 	<xacro:sensor_gps prefix="$(arg prefix)gps" parent="$(arg prefix)base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
 		<origin xyz="0.491 0 1.503" rpy="0 0 0"/>
 	</xacro:sensor_gps>
-
 
 </robot>
