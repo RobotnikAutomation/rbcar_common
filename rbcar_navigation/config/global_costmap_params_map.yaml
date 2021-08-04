@@ -1,10 +1,10 @@
 global_costmap:
-  global_frame: map
-  robot_base_frame: base_link
+  global_frame: $(arg global_frame)
+  robot_base_frame: $(arg base_frame)
   update_frequency: 5.0
   # robot radius +safety_delta 0.25 + 0.02
   # set to permit drawing a trajectory through the narrowest door
-  inflation_radius: 0.20  
+  inflation_radius: 0.20
   width: 1800.0 #5
   height: 1800.0 #5
   origin_x: -900.0
@@ -15,11 +15,10 @@ global_costmap:
 #  - {name: static_layer,        type: "costmap_2d::StaticLayer" }
 #
 #  static_layer:
-#    enabled: false  
+#    enabled: false
 #  plugins:
 #    - name: obstacle_layer
 #      type: "costmap_2d::VoxelLayer"
 
 #  obstacle_layer:
 #    enabled: true
-

@@ -1,25 +1,27 @@
 <?xml version="1.0"?>
 <launch>
-	<arg name="prefix" default="rbcar"/>
+	<arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
+	<arg name="prefix" default="$(arg id_robot)_" />
+	
 	<arg name="cmd_vel_topic" default="move_base/cmd_vel"/>
 	<arg name="odom_topic" default="robotnik_base_control/odom"/>
-	<arg name="primitive_filename" default="navigation.mprim" />
+	<arg name="sbpl_primitive_filename" default="$(find rbcar_navigation)/config/primitives/navigation.mprim" />
+	<arg name="base_frame" default="$(arg prefix)base_footprint"/>
+	<arg name="odom_frame" default="$(arg prefix)odom"/>
+	<arg name="global_frame" default="world"/>
 
 	<!-- Run move_base -->
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
-		<rosparam file="$(find rbcar_navigation)/config/move_base_params.yaml" command="load" />
-		<rosparam file="$(find rbcar_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find rbcar_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find rbcar_navigation)/config/local_costmap_params.yaml" command="load" />
-		<!--rosparam file="$(find rbcar_navigation)/config/global_costmap_params_no_map_for_gps.yaml" command="load" /-->
-		<rosparam file="$(find rbcar_navigation)/config/global_costmap_params_map.yaml" command="load" />
-
-		<!--<rosparam file="$(find rbcar_navigation)/config/rsband_local_planner_params.yaml" command="load" />-->
+		<rosparam file="$(find rbcar_navigation)/config/move_base_params.yaml" command="load" subst_value="true"/>
+		<rosparam file="$(find rbcar_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap"  subst_value="true"/>
+		<rosparam file="$(find rbcar_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" subst_value="true"/>
+		<rosparam file="$(find rbcar_navigation)/config/local_costmap_params.yaml" command="load" subst_value="true"/>
+		<rosparam file="$(find rbcar_navigation)/config/global_costmap_params_map.yaml" command="load" subst_value="true"/>
 		<rosparam file="$(find rbcar_navigation)/config/sbpl_global_planner_params.yaml" command="load" />
-		<param name="SBPLLatticePlanner/primitive_filename" value="$(find rbcar_navigation)/config/primitives/$(arg primitive_filename)" />
-		
+		<param name="SBPLLatticePlanner/primitive_filename" value="$(arg sbpl_primitive_filename)" />
+
 		<!-- navfn/NavfnROS -->
-		<rosparam file="$(find rbcar_navigation)/config/teb_local_planner_params_for_gps.yaml" command="load" />
+		<rosparam file="$(find rbcar_navigation)/config/teb_local_planner_params_for_gps.yaml" command="load" subst_value="true"/>
 
 		<!--<param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>-->
 		<remap from="cmd_vel" to="$(arg cmd_vel_topic)" />

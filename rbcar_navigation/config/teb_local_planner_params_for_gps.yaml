@@ -1,8 +1,8 @@
 base_local_planner: teb_local_planner/TebLocalPlannerROS
 
 TebLocalPlannerROS:
-  odom_topic: odom
-  map_frame: odom
+  odom_topic: robotnik_base_control/odom
+  map_frame: $(arg global_frame)
 
   # Trajectory
   teb_autosize: True
