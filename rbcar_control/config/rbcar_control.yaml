@@ -2,33 +2,33 @@ robotnik_base_control:
   type: ackermann_drive_controller/AckermannDriveController
   traction:
     front_right:
-      joint_name: right_front_axle
+      joint_name: $(arg prefix)right_front_axle
       max_speed: 20.0 # rad/s
     front_left:
-      joint_name: left_front_axle
+      joint_name: $(arg prefix)left_front_axle
       max_speed: 20.0 # rad/s
     back_right:
-      joint_name: right_rear_axle
+      joint_name: $(arg prefix)right_rear_axle
       max_speed: 20.0 # rad/s
     back_left:
-      joint_name: left_rear_axle
+      joint_name: $(arg prefix)left_rear_axle
       max_speed: 20.0 # rad/s
   steer:
     front_right:
-      joint_name: right_steering_joint
+      joint_name: $(arg prefix)right_steering_joint
       min_angle: -0.7 # rads
       max_angle: 0.7
     front_left:
-      joint_name: left_steering_joint
+      joint_name: $(arg prefix)left_steering_joint
       min_angle: -0.7 # rads
       max_angle: 0.7
   linear_speed_limit: 10
   linear_acceleration_limit: 1.0
   angular_speed_limit: 2.0
-  angular_acceleration_limit: 2.0 
-  odom_frame: odom
-  robot_base_frame: base_footprint
-  odom_broadcast_tf: true # this value will be overwritten in the launch
+  angular_acceleration_limit: 2.0
+  odom_frame: $(arg prefix)odom
+  robot_base_frame: $(arg prefix)base_footprint
+  odom_broadcast_tf: $(arg publish_odom) # this value will be overwritten in the launch
   odom_topic: odom
   command_topic: cmd_vel
   applied_command_topic: applied_cmd_vel
@@ -40,7 +40,7 @@ robotnik_base_control:
   #use_angular_velocity_as_steering_angle: true
 
 joint_read_state_controller:
-  type: joint_state_controller/JointStateController 
+  type: joint_state_controller/JointStateController
   publish_rate: 100.0
 
 joint_read_command_controller:
@@ -48,14 +48,14 @@ joint_read_command_controller:
 
 joint_pan_position_controller:
   type: velocity_controllers/JointPositionController
-  joint: front_ptz_camera_pan_joint
+  joint: $(arg prefix)front_ptz_camera_pan_joint
   pid: {p: 100.0, i: 0.01, d: 10.0}
 
 joint_tilt_position_controller:
   type: velocity_controllers/JointPositionController
-  joint: front_ptz_camera_tilt_joint
+  joint: $(arg prefix)front_ptz_camera_tilt_joint
   pid: {p: 100.0, i: 0.01, d: 10.0}
 
 elevator_controller:
   type: position_controllers/JointPositionController
-  joint: elevator_joint
+  joint: $(arg prefix)elevator_joint
