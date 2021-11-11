@@ -34,6 +34,7 @@
 	<xacro:arg name="prefix" default="robot_"/>
 	<xacro:arg name="gps_longitude" default="39.5091874"/>
 	<xacro:arg name="gps_latitude" default="-0.4637371"/>
+	<xacro:arg name="gpu" default="true"/>
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
@@ -61,7 +62,7 @@
 	  <origin xyz="0 0.0 0" rpy="1.57079633 0 3.14159265"/>
     </xacro:rear_axle>
 
-	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link">
+	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link"  gpu="$(arg gpu)">
 	  <origin xyz="1.163 0.0 1.602" rpy="0 0.2637 0"/>
 	</xacro:sensor_rslidar_16>
 
@@ -70,7 +71,7 @@
 		<origin xyz="0.319 0.018 0.676" rpy="0 0 0"/>
 	</xacro:sensor_imu_hector>
 
-	<xacro:sensor_sick_outdoorscan3 prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="false">
+	<xacro:sensor_sick_outdoorscan3 prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="$(arg gpu)">
 		<origin xyz="2.101 0 0.206" rpy="0 0 0"/>
 	</xacro:sensor_sick_outdoorscan3>
 
