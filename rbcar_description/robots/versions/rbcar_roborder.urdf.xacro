@@ -34,7 +34,10 @@
 
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
-  <xacro:arg name="prefix" default="robot_"/>
+        <xacro:arg name="prefix" default="robot_"/>
+        <xacro:arg name="gps_longitude" default="39.5091874"/>
+        <xacro:arg name="gps_latitude" default="-0.4637371"/>
+        <xacro:arg name="gpu" default="true"/>
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
@@ -66,12 +69,12 @@
                     lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />   
 
 	<!-- SENSORS -->
-  <xacro:sensor_benewake_ce30d prefix="$(arg prefix)front_3d_lidar" parent="$(arg prefix)base_link" gpu="true">
+  <!--xacro:sensor_benewake_ce30d prefix="$(arg prefix)front_3d_lidar" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
       <origin xyz="2.155 0.0 0.236" rpy="0 0 0"/>
-  </xacro:sensor_benewake_ce30d>
-  <xacro:sensor_rubedos_viper prefix="$(arg prefix)viper" parent="$(arg prefix)base_link">
+  </xacro:sensor_benewake_ce30d-->
+  <!--xacro:sensor_rubedos_viper prefix="$(arg prefix)viper" parent="$(arg prefix)base_link">
       <origin xyz="1.289 0.0 1.354" rpy="0 0.0 0.0"/>
-  </xacro:sensor_rubedos_viper>
+  </xacro:sensor_rubedos_viper!-->
 
 	<xacro:sensor_imu_hector prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
 		<origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
@@ -88,6 +91,10 @@
   <xacro:sensor_axis_q8641 prefix="$(arg prefix)front_ptz_camera" parent="$(arg prefix)elevator_link" far="300" near="0.08">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:sensor_axis_q8641>
+
+  <!--xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link"  gpu="$(arg gpu)">
+    <origin xyz="1.163 0.0 1.602" rpy="0 0.2637 0"/>
+  </xacro:sensor_rslidar_16-->
 
 <gazebo>
 <plugin name="ground_truth_controller" filename="librobotnik_gazebo_ground_truth_odom.so">

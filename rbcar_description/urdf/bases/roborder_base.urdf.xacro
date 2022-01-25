@@ -4,7 +4,7 @@
 
   <xacro:include filename="$(find rbcar_description)/urdf/bases/roborder_base.gazebo.xacro" />
 
-  <xacro:macro name="roborder_base" params="name publish_bf hq">
+  <xacro:macro name="roborder_base" params="prefix:='' name publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
@@ -14,7 +14,7 @@
 
   <!-- BASE FOOTPRINT -->
   <xacro:if value="${publish_bf}">
-    <link name="base_footprint">
+    <link name="${prefix}base_footprint">
       <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
@@ -31,15 +31,15 @@
 -->
     </link>
 
-    <joint name="base_footprint_joint" type="fixed">
+    <joint name="${prefix}base_footprint_joint" type="fixed">
       <origin xyz="0 0 ${clearance}" rpy="0 0 0" />  <!-- height is the clearance -->
-      <parent link="base_footprint"/>
-      <child link="base_link" />
+      <parent link="${prefix}base_footprint"/>
+      <child link="${prefix}base_link" />
     </joint>
   </xacro:if>
 
   <!-- BASE_LINK -->
-  <link name="base_link">
+  <link name="${prefix}base_link">
     <inertial>
       <mass value="125.0" />
       <origin xyz="0.917 0 0" />

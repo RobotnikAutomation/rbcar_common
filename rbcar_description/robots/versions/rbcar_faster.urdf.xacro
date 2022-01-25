@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+  <robot name="rbcar"
+    xmlns:xacro="http://wiki.ros.org/xacro">
+
+	<!-- ***************** -->
+	<!-- Imported elements -->
+	<!-- ***************** -->
+
+	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
+
+	<!-- Import Robotnik CAR base elements -->
+	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
+
+	<!-- Import Robotnik CAR wheels -->
+	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" />
+	<xacro:include filename="$(find rbcar_description)/urdf/wheels/rear_axle.urdf.xacro" />
+
+	<!-- Import all available sensors -->
+	<xacro:include filename="$(find rbcar_description)/urdf/structures/elevator.urdf.xacro" />
+	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
+
+	<!-- ***************** -->
+	<!-- Global parameters -->
+	<!-- ***************** -->
+
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<!-- Wheel parameters -->
+	<xacro:property name="wheel_offset_x" value="1.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
+	<xacro:property name="wheel_offset_y" value="0.75" />
+	<xacro:property name="wheel_offset_z" value="0.0" />
+
+	<!-- Flag to select the high or low quality model -->
+	<xacro:property name="hq" value="true" />
+	<xacro:arg name="prefix" default="robot_"/>
+	<xacro:arg name="gps_longitude" default="39.5091874"/>
+	<xacro:arg name="gps_latitude" default="-0.4637371"/>
+	<xacro:arg name="gpu" default="true"/>
+
+	<!-- *************** -->
+	<!-- Robots Elements -->
+	<!-- *************** -->
+
+	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
+
+	<xacro:rbcar_base name="rbcar" prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
+
+	<!-- Gazebo ros control pluggins -->
+	<xacro:ros_control/>
+
+	<!-- Wheels -->
+	<xacro:front_wheel lr_prefix="$(arg prefix)left" fr_prefix="front"
+					 lr_reflect="1" fr_reflect="1" parent="$(arg prefix)base_link" />
+	<xacro:front_wheel lr_prefix="$(arg prefix)right" fr_prefix="front"
+					 lr_reflect="-1" fr_reflect="1" parent="$(arg prefix)base_link" />
+	<xacro:rear_wheel lr_prefix="$(arg prefix)left" fr_prefix="rear"
+					lr_reflect="1" fr_reflect="-1" parent="$(arg prefix)base_link" />
+	<xacro:rear_wheel lr_prefix="$(arg prefix)right" fr_prefix="rear"
+					lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />
+  
+    <xacro:rear_axle prefix="$(arg prefix)rear_axle" parent="$(arg prefix)base_link">
+	  <origin xyz="0 0.0 0" rpy="1.57079633 0 3.14159265"/>
+    </xacro:rear_axle>
+
+	<!-- Sensors-->
+
+	<xacro:elevator parent="$(arg prefix)base_link" prefix="$(arg prefix)">
+		<origin xyz="0.0 0.0 0.6" rpy="0 0 0"/>
+	</xacro:elevator>
+
+	<xacro:sensor_axis_q8641 prefix="$(arg prefix)front_ptz_camera" parent="$(arg prefix)elevator_link" far="300" near="0.08">
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+	</xacro:sensor_axis_q8641>
+
+	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	  <origin xyz="1.39477 0.0 2.07733" rpy="0 0.698132 0"/> <!--rpy="0 0.261799 0" -->
+	</xacro:sensor_rslidar_16>
+
+	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	  <origin xyz="2.155 0.0 0.236" rpy="0 0 0"/>
+	</xacro:sensor_hokuyo_utm30lx>
+
+	<xacro:sensor_imu_hector prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
+		<origin xyz="0.319 0.018 0.676" rpy="0 0 0"/>
+	</xacro:sensor_imu_hector>
+
+	<xacro:sensor_gps prefix="$(arg prefix)gps" parent="$(arg prefix)base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
+		<origin xyz="0.491 0 1.503" rpy="0 0 0"/>
+	</xacro:sensor_gps>
+
+	<xacro:sensor_rubedos_viper prefix="$(arg prefix)viper" parent="$(arg prefix)base_link">
+      <origin xyz="0.6 0.0 1.354" rpy="0 0.1745 0.0"/>
+  	</xacro:sensor_rubedos_viper>
+
+<!--Gazebo plugins-->
+<gazebo>
+	<plugin name="ground_truth_controller" filename="librobotnik_gazebo_ground_truth_odom.so">
+		<alwaysOn>true</alwaysOn>
+		<updateRate>50.0</updateRate>
+		<bodyName>$(arg prefix)base_link</bodyName>
+		<frameName>base_footprint_gt</frameName>
+		<worldBodyName>world</worldBodyName>
+		<worldFrameName>$(arg prefix)odom</worldFrameName>
+		<topicName>odom_gt</topicName>
+		<gaussianNoise>0.01</gaussianNoise>
+		<xyzOffset>0.0 0 0</xyzOffset>
+		<rpyOffset>0 0 0</rpyOffset>
+		<applyOffset>False</applyOffset>
+		<broadcastTF>True</broadcastTF>
+	</plugin>
+</gazebo>
+
+<gazebo>
+	<plugin name="gps_ground_truth_controller" filename="librobotnik_gazebo_ground_truth_odom.so">
+		<alwaysOn>true</alwaysOn>
+		<updateRate>50.0</updateRate>
+		<bodyName>$(arg prefix)gps_base_link</bodyName>
+		<frameName>gps_base_link_gt</frameName>
+		<worldBodyName>world</worldBodyName>
+		<worldFrameName>world</worldFrameName>
+		<topicName>odom_gt</topicName>
+		<gaussianNoise>0.01</gaussianNoise>
+		<xyzOffset>0.0 0 0</xyzOffset>
+		<rpyOffset>0 0 0</rpyOffset>
+		<applyOffset>False</applyOffset>
+		<broadcastTF>True</broadcastTF>
+	</plugin>
+</gazebo>
+</robot>
+
