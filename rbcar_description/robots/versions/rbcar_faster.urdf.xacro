@@ -85,7 +85,7 @@
 	</xacro:sensor_imu_hector>
 
 	<xacro:sensor_gps prefix="$(arg prefix)gps" parent="$(arg prefix)base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
-		<origin xyz="0.491 0 1.503" rpy="0 0 0"/>
+		<origin xyz="0.491 -0.5272 1.503" rpy="0 0 0"/>
 	</xacro:sensor_gps>
 
 	<xacro:sensor_rubedos_viper prefix="$(arg prefix)viper" parent="$(arg prefix)base_link">
