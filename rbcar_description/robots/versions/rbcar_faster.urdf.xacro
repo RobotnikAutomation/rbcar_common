@@ -72,11 +72,11 @@
 		<origin xyz="0 0 0" rpy="0 0 0"/>
 	</xacro:sensor_axis_q8641>
 
-	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" prefix_topic="top_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
 	  <origin xyz="1.39477 0.0 2.07733" rpy="0 0.698132 0"/> <!--rpy="0 0.261799 0" -->
 	</xacro:sensor_rslidar_16>
 
-	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_3d_laser" prefix_topic="front_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
 	  <origin xyz="2.155 0.0 0.236" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_utm30lx>
 
