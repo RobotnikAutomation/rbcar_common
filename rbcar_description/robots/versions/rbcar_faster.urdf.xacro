@@ -89,7 +89,7 @@
 	</xacro:sensor_gps>
 
 	<xacro:sensor_rubedos_viper prefix="$(arg prefix)viper" parent="$(arg prefix)base_link">
-      <origin xyz="0.6 0.0 1.354" rpy="0 0.1745 0.0"/>
+      <origin xyz="1.289 0.0 1.354" rpy="0 0.1745 0.0"/>
   	</xacro:sensor_rubedos_viper>
 
 <!--Gazebo plugins-->
