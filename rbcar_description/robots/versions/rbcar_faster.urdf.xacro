@@ -73,11 +73,12 @@
 	</xacro:sensor_axis_q8641>
 
 	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
-	  <origin xyz="1.39477 0.0 2.07733" rpy="0 0.698132 0"/> <!--rpy="0 0.261799 0" -->
+	  <origin xyz="1.39477 0.0 1.66733" rpy="0 0.673132 0"/> <!--rpy="0 0.261799 0" -->
 	</xacro:sensor_rslidar_16>
 
+	<!--M1-->
 	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
-	  <origin xyz="2.155 0.0 0.236" rpy="0 0 0"/>
+	  <origin xyz="2.155 0.0 0.186" rpy="0 0.026 0"/>
 	</xacro:sensor_hokuyo_utm30lx>
 
 	<xacro:sensor_imu_hector prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
@@ -89,8 +90,13 @@
 	</xacro:sensor_gps>
 
 	<xacro:sensor_rubedos_viper prefix="$(arg prefix)viper" parent="$(arg prefix)base_link">
-      <origin xyz="1.289 0.0 1.354" rpy="0 0.1745 0.0"/>
+      <origin xyz="1.289 0.0 1.354" rpy="0 0.0 0.0"/>
   	</xacro:sensor_rubedos_viper>
+
+	<!--Hokuyo UTM30-->
+	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	  <origin xyz="1.289 0.0 1.364" rpy="0 0.0 0.0"/>
+	</xacro:sensor_hokuyo_utm30lx>
 
 <!--Gazebo plugins-->
 <gazebo>
