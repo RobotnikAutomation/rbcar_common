@@ -12,12 +12,12 @@
 	<xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.urdf.xacro" />
 
 	<!-- Import Robotnik CAR wheels -->
-	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v2.urdf.xacro" />
-	<xacro:include filename="$(find rbcar_description)/urdf/wheels/rear_axle.urdf.xacro" />
-
+	<xacro:include filename="$(find rbcar_description)/urdf/wheels/suspension_wheel_v3.urdf.xacro" />
+	
 	<!-- Import all available sensors -->
 	<xacro:include filename="$(find rbcar_description)/urdf/structures/elevator.urdf.xacro" />
 	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
+  	<xacro:include filename="$(find robotnik_sensors)/urdf/utils/inertia.urdf.xacro" />
 
 	<!-- ***************** -->
 	<!-- Global parameters -->
@@ -26,15 +26,15 @@
 	<xacro:property name="PI" value="3.1415926535897931"/>
 
 	<!-- Wheel parameters -->
-	<xacro:property name="wheel_offset_x" value="1.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
-	<xacro:property name="wheel_offset_y" value="0.75" />
+	<xacro:property name="wheel_offset_x" value="0.91131" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
+	<xacro:property name="wheel_offset_y" value="0.62124" />
 	<xacro:property name="wheel_offset_z" value="0.0" />
 
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
 	<xacro:arg name="prefix" default="robot_"/>
-	<xacro:arg name="gps_longitude" default="39.5091874"/>
-	<xacro:arg name="gps_latitude" default="-0.4637371"/>
+	<xacro:arg name="gps_longitude" default="39.551218"/>
+	<xacro:arg name="gps_latitude" default="-0.467738"/>
 	<xacro:arg name="gpu" default="true"/>
 
 	<!-- *************** -->
@@ -43,26 +43,23 @@
 
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 
+	<!-- Rbcar base -->
 	<xacro:rbcar_base name="rbcar" prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
 
 	<!-- Gazebo ros control pluggins -->
 	<xacro:ros_control/>
 
 	<!-- Wheels -->
-	<xacro:front_wheel lr_prefix="$(arg prefix)left" fr_prefix="front"
-					 lr_reflect="1" fr_reflect="1" parent="$(arg prefix)base_link" />
-	<xacro:front_wheel lr_prefix="$(arg prefix)right" fr_prefix="front"
-					 lr_reflect="-1" fr_reflect="1" parent="$(arg prefix)base_link" />
-	<xacro:rear_wheel lr_prefix="$(arg prefix)left" fr_prefix="rear"
-					lr_reflect="1" fr_reflect="-1" parent="$(arg prefix)base_link" />
-	<xacro:rear_wheel lr_prefix="$(arg prefix)right" fr_prefix="rear"
-					lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />
-  
-    <xacro:rear_axle prefix="$(arg prefix)rear_axle" parent="$(arg prefix)base_link">
-	  <origin xyz="0 0.0 0" rpy="1.57079633 0 3.14159265"/>
-    </xacro:rear_axle>
+  	<xacro:front_wheel prefix="$(arg prefix)" lr_prefix="left" fr_prefix="front"
+                     lr_reflect="1" fr_reflect="1" parent="$(arg prefix)base_link" />
+  	<xacro:front_wheel prefix="$(arg prefix)" lr_prefix="right" fr_prefix="front"
+                     lr_reflect="-1" fr_reflect="1" parent="$(arg prefix)base_link" />
+  	<xacro:rear_wheel prefix="$(arg prefix)" lr_prefix="left" fr_prefix="rear"
+                    lr_reflect="1" fr_reflect="-1" parent="$(arg prefix)base_link" />
+  	<xacro:rear_wheel prefix="$(arg prefix)" lr_prefix="right" fr_prefix="rear"
+                    lr_reflect="-1" fr_reflect="-1" parent="$(arg prefix)base_link" />   
 
-	<!-- Sensors-->
+	<!-- SENSORS -->
 
 	<xacro:elevator parent="$(arg prefix)base_link" prefix="$(arg prefix)">
 		<origin xyz="0.0 0.0 0.6" rpy="0 0 0"/>
@@ -72,14 +69,14 @@
 		<origin xyz="0 0 0" rpy="0 0 0"/>
 	</xacro:sensor_axis_q8641>
 
-	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	<xacro:sensor_rslidar_16 prefix="$(arg prefix)top_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)"  prefix_topic="top_3d_laser">
 	  <origin xyz="1.39477 0.0 1.66733" rpy="0 0.673132 0"/> <!--rpy="0 0.261799 0" -->
 	</xacro:sensor_rslidar_16>
 
 	<!--M1-->
-	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	<xacro:sensor_benewake_ce30d prefix="$(arg prefix)front_3d_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)" prefix_topic="front_3d_laser">
 	  <origin xyz="2.155 0.0 0.186" rpy="0 0.026 0"/>
-	</xacro:sensor_hokuyo_utm30lx>
+	</xacro:sensor_benewake_ce30d>
 
 	<xacro:sensor_imu_hector prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
 		<origin xyz="0.319 0.018 0.676" rpy="0 0 0"/>
@@ -94,7 +91,7 @@
   	</xacro:sensor_rubedos_viper>
 
 	<!--Hokuyo UTM30-->
-	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)">
+	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)" prefix_topic="front_laser">
 	  <origin xyz="1.289 0.0 1.364" rpy="0 0.0 0.0"/>
 	</xacro:sensor_hokuyo_utm30lx>
 
@@ -133,4 +130,3 @@
 	</plugin>
 </gazebo>
 </robot>
-
