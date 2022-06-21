@@ -29,10 +29,14 @@
         </geometry>
       </visual>
   
-      <inertial>
+      <!--inertial>
         <mass value="1" />
         <origin xyz="0 0 0" />
         <solid_cuboid_inertia m="1" h="0.1" d="0.1" w="0.1"/>
+      </inertial-->
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
     </link>
   
@@ -53,10 +57,14 @@
             <cylinder radius="${inner_radius}" length="${length}"/>
         </geometry>
       </visual>
-      <inertial>
+      <!--inertial>
         <mass value="0.1" />
         <origin xyz="0 0 -0.27" />
         <solid_cuboid_inertia m="0.1" h="0.1" d="0.1" w="0.1"/>
+      </inertial-->
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
     </link>
     <transmission name="${prefix}elevator_trans">

@@ -7,10 +7,10 @@
        is a "zero offset" wheel. hex_hub_depth = tire_width / 2 -
        axle_length. -->
   <xacro:property name="hub_dia" value="0.235"/>
-  <xacro:property name="tire_dia" value="0.634"/>
-  <xacro:property name="tire_width" value="0.322"/>
+  <xacro:property name="tire_dia" value="0.639"/>  
+  <xacro:property name="tire_width" value="0.245"/>
 
-  <xacro:property name="hex_hub_depth" value="0.120"/> <!-- or +0.072 -->
+  <xacro:property name="hex_hub_depth" value="0.0"/> <!-- or +0.072 -->
   <xacro:property name="wheel_mass" value="8.0"/>   <!-- check -->
 
   <!-- hex_hub_dist is the distance between left and right hex hubs when
@@ -19,7 +19,8 @@
        vertical wheel travel. -->
   <xacro:property name="wheelbase" value="1.83323"/>
   <!--xacro:property name="hex_hub_dist" value="1.2385"/-->  <!-- 1.127 0.742 0.900 check -->
-  <xacro:property name="axle_length" value="0.120"/>
+  <!--xacro:property name="axle_length" value="0.120"/-->
+  <xacro:property name="axle_length" value="0.12"/>
   <xacro:property name="wheel_travel" value="0.1"/>
   <xacro:property name="shock_z_offset" value="0.05"/>
 
@@ -86,9 +87,9 @@
 
   <!-- Shock absorber -->
   <xacro:macro name="shock"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect child parent">
+               params="prefix lr_prefix fr_prefix lr_reflect fr_reflect child parent">
 
-    <joint name="${lr_prefix}_${fr_prefix}_shock" type="fixed">
+    <joint name="${prefix}${lr_prefix}_${fr_prefix}_shock" type="fixed">
       <parent link="${parent}"/>
       <child link="${child}"/>
       <xacro:if value="${fr_prefix=='front'}">
@@ -102,85 +103,55 @@
       <origin xyz="${fr_reflect * wheelbase / 2 + 1}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length )}
                    ${(wheel_travel / 2) - shock_z_offset}"/>
-
-      <!--axis xyz="0 0 -1"/-->
-      <!--limit lower="${-wheel_travel / 2}" upper="${wheel_travel / 2}"
-             effort="${shock_eff_limit}" velocity="${shock_vel_limit}"/>
-      <joint_properties damping="${suspension_joint_damping}" friction="${suspension_joint_friction}"/-->
     </joint>
 
-    <!--transmission name="${lr_prefix}_${fr_prefix}_shock_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${lr_prefix}_${fr_prefix}_shock">
-        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      </joint>
-      <actuator name="${lr_prefix}_${fr_prefix}_shock_act">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-    </transmission-->
 
   </xacro:macro>
 
   <!-- The "wheel" macro defines an axle carrier, axle, and wheel. -->
-  <xacro:macro name="wheel" params="lr_prefix fr_prefix lr_reflect">
+  <xacro:macro name="wheel" params="prefix lr_prefix fr_prefix lr_reflect">
 
-    <link name="${lr_prefix}_${fr_prefix}_axle_carrier">
-	  <!-- visual>
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <cylinder radius="0.1" length="0.1"/>
-        </geometry>
-	  </visual>
-	  <collision>
-        <origin xyz="0 0 0"/>
-        <geometry>
-          <cylinder radius="0.1" length="0.1"/>
-        </geometry>
-	  </collision -->
+    <link name="${prefix}${lr_prefix}_${fr_prefix}_axle_carrier">	
       <xacro:null_inertial/>
     </link>
 
     <!-- The left and right axles have the same axis so that identical
          rotation values cause the wheels to rotate in the same direction. -->
-    <joint name="${lr_prefix}_${fr_prefix}_axle" type="continuous">
-      <parent link="${lr_prefix}_${fr_prefix}_axle_carrier"/>
-      <child link="${lr_prefix}_${fr_prefix}_wheel"/>
+    <joint name="${prefix}${lr_prefix}_${fr_prefix}_axle" type="continuous">
+      <parent link="${prefix}${lr_prefix}_${fr_prefix}_axle_carrier"/>
+      <child link="${prefix}${lr_prefix}_${fr_prefix}_wheel"/>
       <origin rpy="${degrees_90} 0 ${degrees_180}"/>
       <axis xyz="0 0 1"/>
       <limit effort="${axle_eff_limit}" velocity="${axle_vel_limit}"/>
       <joint_properties damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
     </joint>
 
-
-    <transmission name="${lr_prefix}_${fr_prefix}_axle_trans">
+    <transmission name="${prefix}${lr_prefix}_${fr_prefix}_axle_trans">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${lr_prefix}_${fr_prefix}_axle">
+      <joint name="${prefix}${lr_prefix}_${fr_prefix}_axle">
         <!-- hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface -->
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
-      <actuator name="${lr_prefix}_${fr_prefix}_axle_act">
+      <actuator name="${prefix}${lr_prefix}_${fr_prefix}_axle_act">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
 
-    <gazebo reference="${lr_prefix}_${fr_prefix}_axle_carrier">
+    <gazebo reference="${prefix}${lr_prefix}_${fr_prefix}_axle_carrier">
       <material>Gazebo/Black</material>
     </gazebo>
 
-
-    <link name="${lr_prefix}_${fr_prefix}_wheel">
+    <link name="${prefix}${lr_prefix}_${fr_prefix}_wheel">
       <visual>
-
         <xacro:if value="${lr_prefix=='left'}">
           <origin xyz="0
                        0
-                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "${degrees_90} 0 ${degrees_180}"/>
-
+                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth)) - 0.08} " rpy = "-${degrees_90} 0 ${degrees_180}"/>
         </xacro:if>
         <xacro:if value="${lr_prefix=='right'}">
           <origin xyz="0
                        0
-                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth))}" rpy = "-${degrees_90} 0 ${degrees_180}"/>
+                       ${lr_reflect * (axle_length - (tire_width / 2 - hex_hub_depth)) + 0.08} " rpy = "${degrees_90} 0 ${degrees_180}"/>
         </xacro:if>
         <geometry>
           <!--cylinder radius="${tire_dia / 2}" length="${tire_width}"/-->
@@ -188,7 +159,6 @@
         </geometry>
         <material name="tire_mat"/>
       </visual>
-
       <collision>
         <origin xyz="0
                      0
@@ -197,13 +167,12 @@
           <cylinder radius="${tire_dia / 2}" length="${tire_width}"/>
         </geometry>
       </collision>
-
       <xacro:thick_walled_tube_inertial
           inner_rad="${hub_dia / 2}" outer_rad="${tire_dia / 2}"
           height="${tire_width}" mass="${wheel_mass}"/>
     </link>
 
-    <gazebo reference="${lr_prefix}_${fr_prefix}_wheel">
+    <gazebo reference="${prefix}${lr_prefix}_${fr_prefix}_wheel">
       <material>Gazebo/Black</material>
     </gazebo>
   </xacro:macro>
@@ -213,12 +182,12 @@
 
   <!-- Front wheel -->
   <xacro:macro name="front_wheel"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect parent">
-    <xacro:shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+               params="prefix lr_prefix fr_prefix lr_reflect fr_reflect parent">
+    <xacro:shock prefix="${prefix}" lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
-                 child="${lr_prefix}_steering_link" parent="${parent}"/>
+                 child="${prefix}${lr_prefix}_steering_link" parent="${parent}"/>
 
-    <link name="${lr_prefix}_steering_link">
+    <link name="${prefix}${lr_prefix}_steering_link">
 	  <!-- visual>
 		<origin xyz="0 0 0"/>
         <geometry>
@@ -234,9 +203,9 @@
       <xacro:null_inertial/>
     </link>
 
-    <joint name="${lr_prefix}_steering_joint" type="revolute">
-      <parent link="${lr_prefix}_steering_link"/>
-      <child link="${lr_prefix}_${fr_prefix}_axle_carrier"/>
+    <joint name="${prefix}${lr_prefix}_steering_joint" type="revolute">
+      <parent link="${prefix}${lr_prefix}_steering_link"/>
+      <child link="${prefix}${lr_prefix}_${fr_prefix}_axle_carrier"/>
       <axis xyz="0 0 1"/>
       <xacro:if value="${lr_reflect == 1}"> <!-- this applies if we are setting the left wheel -->
         <limit lower="${-degrees_34}" upper="${degrees_45}"
@@ -247,32 +216,32 @@
              effort="${servo_stall_torque}" velocity="${servo_no_load_speed}"/>
       </xacro:unless>
     </joint>
-    <transmission name="${lr_prefix}_steering_trans">
+    <transmission name="${prefix}${lr_prefix}_steering_trans">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="${lr_prefix}_steering_joint">
+      <joint name="${prefix}${lr_prefix}_steering_joint">
         <!--<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>-->
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
-      <actuator name="${lr_prefix}_steering_act">
+      <actuator name="${prefix}${lr_prefix}_steering_act">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
 
-    <gazebo reference="${lr_prefix}_steering_link">
+    <gazebo reference="${prefix}${lr_prefix}_steering_link">
       <material>Gazebo/Black</material>
     </gazebo>
 
-    <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+    <xacro:wheel prefix="${prefix}" lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>
   </xacro:macro>
 
   <!-- Rear wheel -->
   <xacro:macro name="rear_wheel"
-               params="lr_prefix fr_prefix lr_reflect fr_reflect parent">
-    <xacro:shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+               params="prefix lr_prefix fr_prefix lr_reflect fr_reflect parent">
+    <xacro:shock prefix="${prefix}" lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}" 
-                 child="${lr_prefix}_${fr_prefix}_axle_carrier" parent="${parent}"/>
-    <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+                 child="${prefix}${lr_prefix}_${fr_prefix}_axle_carrier" parent="${parent}"/>
+    <xacro:wheel prefix="${prefix}" lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
                  lr_reflect="${lr_reflect}"/>
   </xacro:macro>
 
