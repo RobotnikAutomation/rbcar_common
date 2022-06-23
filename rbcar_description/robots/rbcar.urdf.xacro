@@ -70,7 +70,7 @@
 	</xacro:sensor_imu_hector>
 
 	<xacro:sensor_sick_outdoorscan3 prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" prefix_topic="front_laser" min_angle="-1.5" max_angle="1.5" gpu="$(arg gpu)">
-		<origin xyz="2.15679 0 0.05433" rpy="0 0 0"/>
+		<origin xyz="2.15679 0 0.05433" rpy="${PI} 0 0"/>
 	</xacro:sensor_sick_outdoorscan3>
 
 	<xacro:sensor_gps prefix="$(arg prefix)gps" parent="$(arg prefix)base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
