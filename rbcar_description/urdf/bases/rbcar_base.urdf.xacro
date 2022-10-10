@@ -9,7 +9,7 @@
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="wheel_width" value="0.317" />
-  <xacro:property name="clearance" value="${tire_dia/2.0}" />
+  <xacro:property name="clearance" value="0.31" />
 
   <!-- BASE FOOTPRINT -->
   <xacro:if value="${publish_bf}">
