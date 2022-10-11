@@ -10,14 +10,14 @@ print_diagnostics: true
 debug: false
 
 map_frame: world
-odom_frame: odom
-base_link_frame: base_footprint
-world_frame: odom
+odom_frame: $(arg prefix)odom
+base_link_frame: $(arg prefix)base_footprint
+world_frame: $(arg prefix)odom
 
 # -------------------------------------
 # Wheel odometry:
 
-odom0: /robotnik_base_control/odom
+odom0: $(arg odom_topic)
 odom0_config: [false, false, false,
                false, false, false,
                true,  true,  true,
@@ -45,7 +45,7 @@ odom0_relative: false
 # --------------------------------------
 # imu configure:
 
-imu0: /imu/data
+imu0: $(arg imu_topic)
 imu0_config: [false, false, false,
               true,  true,  false,
               false, false, false,
