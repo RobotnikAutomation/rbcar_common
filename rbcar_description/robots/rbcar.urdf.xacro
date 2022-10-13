@@ -42,7 +42,7 @@
 
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 
-	<!-- Summit XL base -->
+	<!-- Rbcar base -->
 	<xacro:rbcar_base name="rbcar" prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
 
 	<!-- Gazebo ros control pluggins -->
@@ -75,6 +75,10 @@
 		<origin xyz="2.101 0 0.206" rpy="0 0 0"/>
 	</xacro:sensor_sick_outdoorscan3>
 
+	<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)rear_laser" parent="$(arg prefix)base_link" gpu="$(arg gpu)" prefix_topic="rear_laser">
+      		<origin xyz="-0.42925 0.0 0.24674" rpy="0 0 ${PI}"/>
+  	</xacro:sensor_hokuyo_utm30lx>
+	
 	<xacro:sensor_gps prefix="$(arg prefix)gps" parent="$(arg prefix)base_link" gps_latitude="$(arg gps_latitude)" gps_longitude="$(arg gps_longitude)">
 		<origin xyz="0.491 0 1.503" rpy="0 0 0"/>
 	</xacro:sensor_gps>
