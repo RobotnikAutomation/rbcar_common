@@ -7,6 +7,7 @@
   <arg name="base_frame" default="$(arg prefix)base_footprint"/>
   <arg name="odom_broadcast_tf" default="true"/>
   <arg name="cmd_vel" default="cmd_vel"/>
+  <arg name="launch_twist_mux" default="true"/>
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find rbcar_control)/config/rbcar_control.yaml" command="load" subst_value="true"/>
@@ -22,7 +23,7 @@
             "
   />
 
-  <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+  <node pkg="twist_mux" type="twist_mux" name="twist_mux" if="$(arg launch_twist_mux)">
     <rosparam command="load" file="$(find rbcar_control)/config/twist_mux.yaml" />
     <remap from="cmd_vel_out" to="robotnik_base_control/$(arg cmd_vel)" />
   </node>
