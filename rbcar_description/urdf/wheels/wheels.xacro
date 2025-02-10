@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Original Values-->
+    <xacro:property name="tire_dia" value="0.634"/>
+    <xacro:property name="tire_width" value="0.322"/>
+
+
+    <!-- Wheels -->
+    <xacro:property name="wheel_car_pos_y_front" value="0.574791"/>
+    <xacro:property name="wheel_car_pos_x_front" value="1.89925"/>
+    <xacro:property name="wheel_car_pos_x_back" value="0.089318"/>
+    
+    <xacro:property name="car_height" value="1.66"/>
+	<xacro:property name="wheel_radius" value="${tire_dia / 2.0}"/>
+    <xacro:property name="wheel_height_fix" value="${wheel_radius * 0.5}"/>
+    <!-- The original collision gave issues in GAzebos physiscs system. The thin wheels did the trick-->
+    <!-- <xacro:property name="wheel_width" value="0.245246"/> -->
+    <xacro:property name="wheel_width" value="0.01"/>
+    <xacro:property name="wheel_scale" value="1.0"/>
+    <xacro:property name="wheel_increment" value="0.010"/>
+    <xacro:property name="mu1_wheel" value="100.0"/>
+    <xacro:property name="mu2_wheel" value="50.0"/>
+    <xacro:property name="kp_wheel" value="1000000.0"/>
+    <xacro:property name="kd_wheel" value="1000000.0"/>
+
+    <!--Steering Joints Links-->
+    <xacro:property name="steering_joint_length" value="0.1"/>
+    <xacro:property name="steer_limlow" value="-0.6108"/>
+    <xacro:property name="steer_limhigh" value="0.6108"/>
+    <xacro:property name="steer_force" value="100000.0"/>
+    <xacro:property name="steer_vel" value="10000.0"/>
+    <xacro:property name="throttle_force" value="204.95"/>
+    <xacro:property name="throttle_vel" value="39.0"/>
+    <xacro:property name="steer_fric" value="0.0"/>
+    <xacro:property name="steer_amort" value="0.0"/>
+
+    
+
+
+    <!-- Wheels-->
+    <xacro:macro  name="link_wheel" params="name r l incr side ackerman_debug:=1">
+      <link name="${name}">
+          <inertial>
+            <mass value="0.2"/>
+            <origin rpy="0 1.57 1.57" xyz="0 0 0"/>
+              <xacro:cylinder_inertia mass="0.2" r="${r}" l="${l}" />
+          </inertial>
+          <collision name="link_right_wheel_collision">
+            <origin rpy="0 1.57 1.57" xyz="0 0 0"/>
+            <geometry>
+              <cylinder length="${l}" radius="${r + incr}"/>
+            </geometry>
+          </collision>
+          <visual name="link_right_wheel_visual">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <!-- <geometry>
+              <cylinder length="${l}" radius="${r + incr}"/>
+            </geometry>             -->
+            <geometry>
+                <xacro:if value="${side=='left'}">
+                    <mesh filename="package://rbcar_description/meshes/wheels/left_wheel_hq.dae" scale="1.0 1.0 1.0"/>
+                </xacro:if>
+                <xacro:if value="${side=='right'}">
+                    <mesh filename="package://rbcar_description/meshes/wheels/right_wheel_hq.dae" scale="1.0 1.0 1.0"/>
+                </xacro:if>
+            </geometry>
+          </visual>
+      </link>
+
+        <gazebo reference="${name}">
+            <kp>${kp_wheel}</kp>
+            <kd>${kd_wheel}</kd>
+            <mu1>${mu1_wheel}</mu1>
+            <mu2>${mu2_wheel}</mu2>
+            <material>Gazebo/Black</material>
+        </gazebo>
+
+        <!-- AckerMan debug -->
+        <xacro:if value="${ackerman_debug == 1}"> <!-- this applies if we are setting the left wheel -->
+            <link name="${name}_wheel_axis">
+              <visual>
+                <origin xyz="0 0 0" rpy = "1.57 0 0"/>
+                
+                <geometry>
+                  <cylinder radius="0.05" length="10.0"/>
+                </geometry>
+                <material name="tire_mat"/>
+              </visual>      
+            </link>
+
+            <joint name="${name}_wheel_axis_ackerman_joint" type="fixed">
+              <parent link="${name}"/>
+              <child link="${name}_wheel_axis"/>      
+            </joint>
+        </xacro:if>
+
+  </xacro:macro >
+
+  <xacro:macro  name="joint_wheel" params="name parent child origin_xyz limef limvel">
+    <joint name="${name}" type="continuous">
+      <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+      <child link="${child}"/>
+      <parent link="${parent}"/>
+      <axis rpy="0 0 0" xyz="0 1 0"/>
+      <limit effort="${limef}" velocity="${limvel}"/>
+      <!-- <joint_properties damping="1.0" friction="1.0"/> -->
+    </joint>
+
+    <transmission name="${name}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${name}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${name}Motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  </xacro:macro >
+
+
+
+    <!-- Steering classes -->
+
+  <xacro:macro name="steering_joint" params="joint_name name1 name2 posxyz posrpy rot limlow limhigh limef limvel fr dm">
+    <joint name="${joint_name}" type="revolute">
+      <parent link="${name1}"/>
+      <child link="${name2}"/>
+        <origin xyz="${posxyz}" rpy="${posrpy}"/>
+        <limit lower="${limlow}" upper="${limhigh}" effort="${limef}" velocity="${limvel}"/>
+        <axis xyz="${rot}"/>
+        <dynamics damping="${dm}" friction="${fr}"/>
+    </joint>
+
+    <transmission name="${joint_name}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${joint_name}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${joint_name}Motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+
+
+
+
+    <xacro:link_wheel name="back_right_wheel" r="${wheel_radius}" l="${wheel_width}" incr="${wheel_increment}" side="right" ackerman_debug="$(arg ackerman_debug_active)"/>
+    <xacro:joint_wheel name="back_joint_right_wheel" parent="base_link" child="back_right_wheel" origin_xyz="${wheel_car_pos_x_back}  ${-1.0 * wheel_car_pos_y_front} 0" limef='${throttle_force}' limvel='${throttle_vel}' />
+
+    <xacro:link_wheel name="back_left_wheel" r="${wheel_radius}" l="${wheel_width}" incr="${wheel_increment}" side="left" ackerman_debug="$(arg ackerman_debug_active)"/>
+    <xacro:joint_wheel name="back_joint_left_wheel" parent="base_link" child="back_left_wheel" origin_xyz="${wheel_car_pos_x_back} ${wheel_car_pos_y_front} 0" limef='${throttle_force}' limvel='${throttle_vel}' />
+
+
+
+
+    <link name ='front_right_wheel_steer_link'>
+        <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="${steering_joint_length} ${steering_joint_length} ${steering_joint_length}"/>
+        </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001" />
+            <inertia ixx="4.166666666666667e-08" ixy="0.0" ixz="0.0" iyy="4.166666666666667e-08" iyz="0.0" izz="4.166666666666667e-08"/>
+        </inertial>
+    </link>
+
+    <link name ='front_left_wheel_steer_link'>
+        <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="${steering_joint_length} ${steering_joint_length} ${steering_joint_length}"/>
+        </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001" />
+            <inertia ixx="4.166666666666667e-08" ixy="0.0" ixz="0.0" iyy="4.166666666666667e-08" iyz="0.0" izz="4.166666666666667e-08"/>
+        </inertial>
+    </link>
+    
+
+    <xacro:steering_joint joint_name='front_right_steer' name1='base_link' name2='front_right_wheel_steer_link' posxyz="${wheel_car_pos_x_front}  ${-1.0 * wheel_car_pos_y_front} 0" posrpy='0 0 0' rot='0 0 1' limlow='-0.6108' limhigh='0.6108' limef='${steer_force}' limvel='${steer_vel}' fr='${steer_fric}' dm='${steer_amort}' />
+    <xacro:steering_joint joint_name='front_left_steer' name1='base_link' name2='front_left_wheel_steer_link' posxyz="${wheel_car_pos_x_front} ${wheel_car_pos_y_front} 0" posrpy='0 0 0' rot='0 0 1' limlow='${steer_limlow}' limhigh='${steer_limhigh}' limef='${steer_force}' limvel='${steer_vel}' fr='${steer_fric}' dm='${steer_amort}' />
+  
+
+    <xacro:link_wheel name="front_right_wheel" r="${wheel_radius}" l="${wheel_width}" incr="${wheel_increment}" side="right" ackerman_debug="$(arg ackerman_debug_active)"/>
+    <xacro:joint_wheel name="front_joint_right_wheel" parent="front_right_wheel_steer_link" child="front_right_wheel" origin_xyz="0 0.0 0" limef='${throttle_force}' limvel='${throttle_vel}' />
+
+
+    <xacro:link_wheel name="front_left_wheel" r="${wheel_radius}" l="${wheel_width}" incr="${wheel_increment}" side="left" ackerman_debug="$(arg ackerman_debug_active)"/>
+    <xacro:joint_wheel name="front_joint_left_wheel" parent="front_left_wheel_steer_link" child="front_left_wheel" origin_xyz="0 0.0 0" limef='${throttle_force}' limvel='${throttle_vel}'/>
+
+
+
+
+</robot>
