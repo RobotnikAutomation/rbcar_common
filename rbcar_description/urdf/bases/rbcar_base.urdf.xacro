@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:include filename="$(find rbcar_description)/urdf/macros.xacro"/>
-</robot>
+
+    
+
 
 <robot name="rbcar" xmlns:xacro="http://wiki.ros.org/xacro">
 
-
+  <xacro:include filename="$(find rbcar_description)/urdf/macros.xacro"/>
   <xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.gazebo.xacro" />
 
   <xacro:macro name="rbcar_base" params="prefix:='' name publish_bf hq">
