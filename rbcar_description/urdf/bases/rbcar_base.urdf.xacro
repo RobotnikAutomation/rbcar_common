@@ -5,7 +5,7 @@
 
 <robot name="rbcar" xmlns:xacro="http://wiki.ros.org/xacro">
 
-  <xacro:include filename="$(find rbcar_description)/urdf/macros.xacro"/>
+  <xacro:include filename="$(find rbcar_description)/urdf/common/macros.xacro"/>
   <xacro:include filename="$(find rbcar_description)/urdf/bases/rbcar_base.gazebo.xacro" />
 
   <xacro:macro name="rbcar_base" params="prefix:='' name publish_bf hq">
