@@ -17,8 +17,8 @@ class cmdvel2gazebo:
         self.pub_steerR = rospy.Publisher('/rbcar/front_right_steer_position_controller/command', Float64, queue_size=1)
         
         
-        self.pub_rearL = rospy.Publisher('/rbcar/back_joint_left_wheel_velocity_controller/command', Float64, queue_size=1)
-        self.pub_rearR = rospy.Publisher('/rbcar/back_joint_right_wheel_velocity_controller/command', Float64, queue_size=1)
+        self.pub_rearL = rospy.Publisher('/rbcar/rear_joint_left_wheel_velocity_controller/command', Float64, queue_size=1)
+        self.pub_rearR = rospy.Publisher('/rbcar/rear_joint_right_wheel_velocity_controller/command', Float64, queue_size=1)
         self.pub_frontL = rospy.Publisher('/rbcar/front_joint_left_wheel_velocity_controller/command', Float64, queue_size=1)
         self.pub_frontR = rospy.Publisher('/rbcar/front_joint_right_wheel_velocity_controller/command', Float64, queue_size=1)
 
