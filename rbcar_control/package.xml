@@ -22,6 +22,7 @@
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>twist_mux</run_depend>
   <run_depend>velocity_controllers</run_depend>
+  <run_depend>effort_controllers</run_depend>
 
   <export>
 
