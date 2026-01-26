@@ -267,7 +267,7 @@ def main():
     car_wheel_threat = 1.02996
 
     # Calculated as the  maximum steering angle the inner wheel can do
-    max_abs_steer = 0.6108
+    max_abs_steer = 0.5747
 
     wheel_radius = 0.634 / 2.0
 
