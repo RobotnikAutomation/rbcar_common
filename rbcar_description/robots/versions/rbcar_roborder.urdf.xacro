@@ -100,11 +100,11 @@
 <plugin name="ground_truth_controller" filename="librobotnik_gazebo_ground_truth_odom.so">
   <alwaysOn>true</alwaysOn>
   <updateRate>50.0</updateRate>
-  <bodyName>$(arg prefix)base_link</bodyName>
-  <frameName>base_footprint_gt</frameName>
+  <bodyName>$(arg prefix)base_footprint</bodyName>
+  <frameName>$(arg prefix)base_footprint</frameName>
   <worldBodyName>world</worldBodyName>
   <worldFrameName>$(arg prefix)odom</worldFrameName>
-  <topicName>odom_gt</topicName>
+  <topicName>odom</topicName>
   <gaussianNoise>0.01</gaussianNoise>
   <xyzOffset>0.0 0 0</xyzOffset>
   <rpyOffset>0 0 0</rpyOffset>
@@ -113,20 +113,20 @@
 </plugin>
 </gazebo>
 
-<gazebo>
+<!-- <gazebo>
 <plugin name="gps_ground_truth_controller" filename="librobotnik_gazebo_ground_truth_odom.so">
   <alwaysOn>true</alwaysOn>
   <updateRate>50.0</updateRate>
   <bodyName>$(arg prefix)gps_base_link</bodyName>
-  <frameName>gps_base_link_gt</frameName>
+  <frameName>$(arg prefix)gps_base_link</frameName>
   <worldBodyName>world</worldBodyName>
   <worldFrameName>world</worldFrameName>
-  <topicName>odom_gt</topicName>
+  <topicName>gps</topicName>
   <gaussianNoise>0.01</gaussianNoise>
   <xyzOffset>0.0 0 0</xyzOffset>
   <rpyOffset>0 0 0</rpyOffset>
   <applyOffset>False</applyOffset>
   <broadcastTF>True</broadcastTF>
 </plugin>
-</gazebo>
+</gazebo> -->
 </robot>
