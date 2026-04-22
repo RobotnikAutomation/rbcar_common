@@ -25,13 +25,13 @@
     </transmission>
 
     <link name="${prefix}">
-      <visual>
+      <!-- <visual>
         <origin xyz="0 0 0"/>
         <geometry>
           <cylinder length="0.2" radius="0.317"/>
         </geometry>
         <material name="tire_mat"/>
-      </visual>
+      </visual> -->
       <collision>
         <origin xyz="0 0 0"/>
         <geometry>
